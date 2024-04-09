@@ -1,137 +1,24 @@
-<!DOCTYPE html>
-<html class="js" lang="fr">
-<meta content="text/html;charset=utf-8" http-equiv="content-type">
+@extends('app')
 
-<head>
-    <meta charset="utf-8">
-    <meta content="Softnio" name="author">
-    <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
-    <meta name="csrf-token" content="{{ csrf_token() }}">
-    <meta content="A powerful and conceptual apps base dashboard template that especially build for developers and programmers." name="description">
-    <link href="{{asset('BGFI_logo.png')}}" rel="shortcut icon">
-    <title>@yield('titre')</title>
-    <link href="assets/css/dashlite0226.css?" rel="stylesheet">
-    <link href="assets/css/theme0226.css" rel="stylesheet">
-    <script src="{{asset('chart.js')}}"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-zoom"></script>
-    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-    <script src="{{ asset('pusher.min.js') }}"></script>
-    </link>
-    </link>
-    </link>
-    </meta>
-    </meta>
-    </meta>
-    </meta>
-</head>
+@section('titre', 'Liste des actions')
 
-<body class="nk-body bg-lighter ">
-    <div class="nk-app-root">
-        <div class="nk-wrap ">
-            <div class="nk-header is-light nk-header-fixed">
-                <div class="container-fluid">
-                    <div class="nk-header-wrap">
-                        <div class="nk-menu-trigger me-sm-2 d-lg-none">
-                            <a class="nk-nav-toggle nk-quick-nav-icon" data-target="headerNav" href="#">
-                                <em class="icon ni ni-menu"></em>
-                            </a>
-                        </div>
-                        <div class="nk-header-brand">
-                            <a class="logo-link" href="{{ route('index_accueil') }}">
-                                <img alt="logo-dark" class="logo-dark logo-img" src="{{asset('BGFI_logo.png')}}">
-                                </img>
-                            </a>
-                        </div>
-                        <div class="nk-header-tools">
-                            <ul class="nk-quick-nav">
-                                @if (Auth::check())
-                                <li class="dropdown user-dropdown">
-                                    <a class="dropdown-toggle" data-bs-toggle="dropdown">
-                                        <div class="user-toggle">
-                                            <div class="user-avatar">
-                                                <em class="icon ni ni-user-alt"></em>
-                                            </div>
-                                            <div class="user-info">
-                                                <div class="user-status text-primary"> </div>
-                                                <div class="user-name dropdown-indicator">
-                                                    {{ session('user_poste')->nom }}
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </a>
-                                    <div class="dropdown-menu dropdown-menu-md dropdown-menu-end dropdown-menu-s1 is-light">
-                                        <div class="dropdown-inner user-card-wrap bg-lighter d-none d-md-block">
-                                            <div class="user-card">
-                                                <div class="user-avatar">
-                                                    <span>
-                                                        <em class="icon ni ni-user-alt"></em>
-                                                    </span>
-                                                </div>
-                                                <div class="user-info">
-                                                    <span class="lead-text">
-                                                        {{ Auth::user()->name }}
-                                                    </span>
-                                                    <span class="sub-text">
-                                                        {{ Auth::user()->email }}
-                                                    </span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="dropdown-inner">
-                                            <ul class="link-list">
-                                                <li>
-                                                    <a href="{{ route('index_profil') }}">
-                                                        <em class="icon ni ni-user-alt"></em>
-                                                        <span>
-                                                            Voir Profil
-                                                        </span>
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a href="{{ route('index_historique_profil')}}">
-                                                        <em class="icon ni ni-activity-alt"></em>
-                                                        <span>
-                                                            Activité
-                                                        </span>
-                                                    </a>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                        <div class="dropdown-inner">
-                                            <ul class="link-list">
-                                                <li>
-                                                    <a href="{{ route('logout') }}">
-                                                        <em class="icon ni ni-signout"></em>
-                                                        <span>
-                                                            Se déconnecter
-                                                        </span>
-                                                    </a>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </li>
-                                @endif
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
+@section('content')
+
             <div class="nk-content ">
                 <div class="container-fluid">
                     <div class="nk-content-inner">
                         <div class="nk-content-body">
                             <div class="nk-block-head nk-block-head-sm">
-                                <div class="nk-block-head nk-block-head-sm">
-                                    <div class="nk-block-between">
-                                        <div class="nk-block-head-content" style="margin:0px auto;">
-                                            <h3 class="text-center">
-                                                <span>Liste des Reclamations</span>
-                                                <em class="icon ni ni-list-index"></em>
-                                            </h3>
+                                <div class="nk-block-head nk-block-head-sm" >
+                                        <div class="nk-block-between">
+                                            <div class="nk-block-head-content" style="margin:0px auto;">
+                                                <h3 class="text-center text-danger">
+                                                    <span>Suivis des rèclamations hors délais</span>
+                                                    <em class="icon ni ni-alert-fill"></em>
+                                                </h3>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
                             </div>
                             <div class="nk-block">
                                 <div class="row g-gs">
@@ -140,22 +27,144 @@
                                             <div class="card-inner">
                                                 <table class="datatable-init table">
                                                     <thead>
-                                                        <tr class="text-center">
+                                                        <tr class="">
                                                             <th></th>
-                                                            <th>Type</th>
+                                                            <th>Lieu</th>
+                                                            <th>Détecteur</th>
+                                                            <th>Date d'enregistrement</th>
+                                                            <th>Date Limite de traitement</th>
+                                                            <th>Nombre d'action</th>
+                                                            <th>Action éffectuée</th>
+                                                            <!--<th>Date de réalisation</th>-->
+                                                            <th>Statut</th>
                                                             <th></th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        <tr class="text-center">
-                                                            <td>1</td>
-                                                            <td>qsdfghjh</td>
-                                                            <td>
-                                                                <a data-bs-toggle="modal" data-bs-target="#modalDetail" href="#" class="btn btn-icon btn-white btn-dim btn-sm btn-warning">
-                                                                    <em class="icon ni ni-eye"></em>
-                                                                </a>
-                                                            </td>
-                                                        </tr>
+                                                        @foreach($ams as $key => $am)
+                                                            <tr class="">
+                                                                <td>{{ $key+1 }}</td>
+                                                                <td>{{ $am->lieu }}</td>
+                                                                <td>{{ $am->detecteur }}</td>
+                                                                <td>
+                                                                    {{ \Carbon\Carbon::parse($am->date_fiche)->translatedFormat('j F Y ') }}
+                                                                </td>
+
+                                                                <td>
+                                                                    {{ \Carbon\Carbon::parse($am->date_limite)->translatedFormat('j F Y ') }}
+                                                                </td>
+
+                                                                <td class="text-primary" >
+                                                                    {{ $am->nbre_action }}
+                                                                </td>
+
+                                                                @if ($am->nbre_action_eff === 0)
+                                                                    <td class="text-danger" >
+                                                                        {{ $am->nbre_action_eff }}
+                                                                    </td>
+                                                                @elseif ($am->nbre_action_eff > 0)
+                                                                    <td class="text-success" >
+                                                                        {{ $am->nbre_action_eff }}
+                                                                    </td>
+                                                                @endif
+
+                                                                <!--@if ($am->date_cloture1 !== null)
+                                                                    <td> {{ \Carbon\Carbon::parse($am->date_cloture1)->format('d/m/Y') }} </td>
+                                                                @else
+                                                                    <td>
+                                                                        Néant
+                                                                    </td>
+                                                                @endif-->
+
+                                                                @if ( $am->statut === 'valider' )
+                                                                    <td>
+                                                                        <span class="badge badge-dim bg-primary">
+                                                                            <em class="icon ni ni-check"></em>
+                                                                            <span class="fs-12px" >Valider</span>
+                                                                        </span>
+                                                                    </td>
+                                                                @elseif ( $am->statut === 'terminer' )
+                                                                    <td>
+                                                                        <span class="badge badge-dim bg-info">
+                                                                            <em class="icon ni ni-info"></em>
+                                                                            <span class="fs-12px" >Réaliser</span>
+                                                                        </span>
+                                                                    </td>
+                                                                @elseif ( $am->statut === 'date_efficacite' )
+                                                                    <td>
+                                                                        <span class="badge badge-dim bg-warning">
+                                                                            <em class="icon ni ni-stop-circle"></em>
+                                                                            <span class="fs-12px" >En attente de l'évaluation de l'éfficacité</span>
+                                                                        </span>
+                                                                    </td>
+                                                                @elseif ( $am->statut === 'cloturer' )
+                                                                    <td>
+                                                                        <span class="badge badge-dim bg-success">
+                                                                            <em class="icon ni ni-check"></em>
+                                                                            <span class="fs-12px" >Clôturer</span>
+                                                                        </span>
+                                                                    </td>
+                                                                @elseif ( $am->statut === 'soumis' )
+                                                                    <td>
+                                                                        <span class="badge badge-dim bg-warning">
+                                                                            <em class="icon ni ni-stop-circle"></em>
+                                                                            <span class="fs-12px" >En attente de validation</span>
+                                                                        </span>
+                                                                    </td>
+                                                                @elseif ( $am->statut === 'non-valider' )
+                                                                    <td>
+                                                                        <span class="badge badge-dim bg-danger">
+                                                                            <em class="icon ni ni-alert"></em>
+                                                                            <span class="fs-12px" >Rejeter</span>
+                                                                        </span>
+                                                                    </td>
+                                                                @elseif ( $am->statut === 'update' )
+                                                                    <td>
+                                                                        <span class="badge badge-dim bg-info">
+                                                                            <em class="icon ni ni-info"></em>
+                                                                            <span class="fs-12px" >Modification en cours</span>
+                                                                        </span>
+                                                                    </td>
+                                                                @endif
+
+                                                                <td>
+                                                                    <a data-bs-toggle="modal" data-bs-target="#modalDetail{{ $am->id }}"
+                                                                        href="#" class="btn btn-icon btn-white btn-dim btn-sm btn-warning">
+                                                                        <em class="icon ni ni-eye"></em>
+                                                                    </a>
+                                                                    <!--<div class="d-flex">
+                                                                        <form method="post" action="{{ route('index_etat_reclamation') }}">
+                                                                            @csrf
+                                                                            <input type="text" name="id" value="{{ $am->id }}" style="display: none;">
+                                                                            <a data-bs-toggle="modal"
+                                                                                data-bs-target="#modalDetail{{ $am->id }}"
+                                                                                href="#" class="btn btn-icon btn-white btn-dim btn-sm btn-warning">
+                                                                                <em class="icon ni ni-eye"></em>
+                                                                            </a>
+                                                                            @if ($am->statut !== 'cloturer')
+                                                                                @if ($am->nbre_action_non === 0 )
+                                                                                    <a data-bs-toggle="modal"
+                                                                                        data-bs-target="#modalDate{{ $am->id }}"
+                                                                                        href="#" class="btn btn-icon btn-white btn-dim btn-sm btn-danger">
+                                                                                        <em class="icon ni ni-calendar"></em>
+                                                                                    </a>
+                                                                                @endif
+                                                                                @if ($am->date1 !== null && $am->date1 <= \Carbon\Carbon::now()->toDateString() && $am->date2 >= \Carbon\Carbon::now()->toDateString() )
+                                                                                    <a data-bs-toggle="modal"
+                                                                                        data-bs-target="#modalEfficacite{{ $am->id }}"
+                                                                                        href="#" class="btn btn-icon btn-white btn-dim btn-sm btn-primary">
+                                                                                        <em class="icon ni ni-focus"></em>
+                                                                                    </a>
+                                                                                @endif
+                                                                            @endif
+                                                                            <button class="btn btn-icon btn-white btn-dim btn-sm btn-primary">
+                                                                                <em class="icon ni ni-printer-fill"></em>
+                                                                            </button>
+                                                                        </form>
+                                                                    </div>-->
+                                                                </td>
+                                                            </tr>
+                                                        @endforeach
                                                     </tbody>
                                                 </table>
                                             </div>
@@ -167,337 +176,439 @@
                     </div>
                 </div>
             </div>
-            <div class="nk-footer bg-white">
-                <div class="container-fluid">
-                    <div class="nk-footer-wrap">
-                        <div class="nk-footer-copyright">
-                            © 2023 BGFIBank.
-                            <img height="30" width="130" src="{{asset('BGFI_logo.jpg')}}" alt="">
+
+            @foreach($ams as $key => $am)
+                <div class="modal fade zoom" tabindex="-1" id="modalDetail{{ $am->id }}">
+                    <div class="modal-dialog modal-lg" role="document" style="width: 100%;">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title">Détails</h5>
+                                <a href="#" class="close" data-bs-dismiss="modal" aria-label="Close"><em class="icon ni ni-cross"></em></a>
+                            </div>
+                            <div class="modal-body">
+                                <form class="nk-block">
+                                    <div class="row g-gs">
+                                        <div class="col-md-12 col-xxl-12" id="groupesContainer">
+                                            <div class="">
+                                                <div class="card-inner">
+                                                    <div class="row g-4">
+                                                        @if ($am->statut === 'soumis')
+                                                            <div class="col-lg-12">
+                                                                <div class="form-group text-center">
+                                                                    <div class="form-control-wrap">
+                                                                        <input value="Fiche en attente de validation" readonly type="text" class="form-control text-center bg-warning" id="Cause">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        @elseif ($am->statut === 'update' )
+                                                            <div class="col-lg-12">
+                                                                <div class="form-group text-center">
+                                                                    <div class="form-control-wrap">
+                                                                        <input value="Fiche en cours de modification" readonly type="text" class="form-control text-center bg-info" id="Cause">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        @elseif ($am->statut === 'non-valider')
+                                                            <div class="col-lg-12">
+                                                                <div class="form-group text-center">
+                                                                    <div class="form-control-wrap">
+                                                                        <input value="Fiche rejeter" readonly type="text" class="form-control text-center bg-danger" id="Cause">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        @elseif ($am->statut === 'valider')
+                                                            <div class="col-lg-12">
+                                                                <div class="form-group text-center">
+                                                                    <div class="form-control-wrap">
+                                                                        <input value="Fiche valider" readonly type="text" class="form-control text-center bg-info" id="Cause">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        @elseif ($am->statut === 'cloturer')
+                                                            <div class="col-lg-12">
+                                                                <div class="form-group text-center">
+                                                                    <div class="form-control-wrap">
+                                                                        <input value="Fiche Clôturer" readonly type="text" class="form-control text-center bg-success" id="Cause">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        @elseif ($am->statut === 'date_efficacite')
+                                                            <div class="col-lg-12">
+                                                                <div class="form-group text-center">
+                                                                    <div class="form-control-wrap">
+                                                                        <input value="Fiche en attente de verification de l'éfficacité" readonly type="text" class="form-control text-center bg-warning" id="Cause">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        @elseif ($am->statut === 'terminer')
+                                                            <div class="col-lg-12">
+                                                                <div class="form-group text-center">
+                                                                    <div class="form-control-wrap">
+                                                                        <input value="Fiche réaliser" readonly type="text" class="form-control text-center bg-info" id="Cause">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        @endif
+                                                        <div class="col-lg-4">
+                                                            <div class="form-group">
+                                                                <label class="form-label" for="Cause">
+                                                                    Date
+                                                                </label>
+                                                                <div class="form-control-wrap">
+                                                                    <input value="{{ \Carbon\Carbon::parse($am->date_fiche)->translatedFormat('j F Y ') }}" readonly type="date" class="form-control" id="Cause">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-4">
+                                                            <div class="form-group">
+                                                                <label class="form-label" for="Cause">
+                                                                    Date limite de traitement
+                                                                </label>
+                                                                <div class="form-control-wrap">
+                                                                    <input value="{{ \Carbon\Carbon::parse($am->date_limite)->translatedFormat('j F Y ') }}" readonly type="text" class="form-control" id="Cause">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-4">
+                                                            <div class="form-group">
+                                                                <label class="form-label" for="Cause">
+                                                                    Date de réalisation
+                                                                </label>
+                                                                <div class="form-control-wrap">
+                                                                    @if ($am->date_cloture1 !== null)
+                                                                        @if ($am->date_limite >= $am->date_cloture1)
+                                                                            <input value="{{ \Carbon\Carbon::parse($am->date_cloture1)->translatedFormat('j F Y ') }}" readonly type="text" class="form-control bg-success" id="Cause">
+                                                                        @else
+                                                                            <input value="{{ \Carbon\Carbon::parse($am->date_cloture1)->translatedFormat('j F Y ') }}" readonly type="text" class="form-control bg-danger" id="Cause">
+                                                                        @endif
+                                                                    @else
+                                                                        <input value="Néant" readonly type="text" class="form-control bg-warning text-white" id="Cause">
+                                                                    @endif
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-4">
+                                                            <div class="form-group">
+                                                                <label class="form-label" for="Cause">
+                                                                    Lieu
+                                                                </label>
+                                                                <div class="form-control-wrap">
+                                                                    <input value="{{ $am->lieu }}" readonly type="text" class="form-control" id="Cause">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-4">
+                                                            <div class="form-group">
+                                                                <label class="form-label" for="Cause">
+                                                                    Détecteur
+                                                                </label>
+                                                                <div class="form-control-wrap">
+                                                                    <input value="{{ $am->detecteur }}" readonly type="text" class="form-control" id="Cause">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-4">
+                                                            <div class="form-group">
+                                                                <label class="form-label" for="Cause">
+                                                                    Escaladeur
+                                                                </label>
+                                                                <div class="form-control-wrap">
+                                                                    @if ($am->escaladeur === 'oui')
+                                                                    <input value="Oui" readonly type="text" class="form-control text-center bg-danger" id="Cause">
+                                                                    @endif
+                                                                    @if ($am->escaladeur === 'non')
+                                                                    <input value="Non" readonly type="text" class="form-control text-center bg-success" id="Cause">
+                                                                    @endif
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-12">
+                                                            <div class="form-group">
+                                                                <label class="form-label">
+                                                                    Réclamations
+                                                                </label>
+                                                                <div class="form-control-wrap">
+                                                                    <textarea readonly required name="causes" class="form-control no-resize" id="default-textarea">{{ $am->reclamations }}</textarea>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-6">
+                                                            <div class="form-group">
+                                                                <label class="form-label">
+                                                                    Conséquences
+                                                                </label>
+                                                                <div class="form-control-wrap">
+                                                                    <textarea readonly required name="causes" class="form-control no-resize" id="default-textarea">{{ $am->consequences }}</textarea>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-6">
+                                                            <div class="form-group">
+                                                                <label class="form-label">
+                                                                    Causes
+                                                                </label>
+                                                                <div class="form-control-wrap">
+                                                                    <textarea readonly required name="causes" class="form-control no-resize" id="default-textarea">{{ $am->causes }}</textarea>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        @foreach($actionsData[$am->id] as $key => $actions)
+                                        <div class="col-md-12 col-xxl-122" id="groupesContainer">
+                                            <div class="card ">
+                                                <div class="card-inner">
+                                                    <div class="card-head">
+                                                        <h5 class="card-title">
+                                                            Action {{ $key+1 }}
+                                                        </h5>
+                                                    </div>
+                                                    <div class="row g-4">
+                                                        <div class="col-lg-12">
+                                                            <div class="form-group ">
+                                                                <label class="form-label" for="Cause">
+                                                                    Action
+                                                                </label>
+                                                                <div class="form-control-wrap">
+                                                                    <input value="{{ $actions['action'] }}" readonly type="text" class="form-control " id="Cause">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-12">
+                                                            <div class="form-group ">
+                                                                <label class="form-label" for="Cause">
+                                                                    Causes
+                                                                </label>
+                                                                <div class="form-control-wrap">
+                                                                    <input value="{{ $actions['cause'] }}" readonly type="text" class="form-control " id="Cause">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-12">
+                                                            <div class="form-group ">
+                                                                <label class="form-label" for="Cause">
+                                                                    Réclamation
+                                                                </label>
+                                                                <div class="form-control-wrap">
+                                                                    <input value="{{ $actions['reclamation'] }}" readonly type="text" class="form-control " id="Cause">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-12">
+                                                            <div class="form-group ">
+                                                                <label class="form-label" for="Cause">
+                                                                    Processus
+                                                                </label>
+                                                                <div class="form-control-wrap">
+                                                                    <input value="{{ $actions['processus'] }}" readonly type="text" class="form-control " id="Cause">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        @if ($actions['statut'] === 'realiser')
+                                                            <div class="col-lg-4">
+                                                                <div class="form-group ">
+                                                                    <label class="form-label" for="Cause">
+                                                                        Délai
+                                                                    </label>
+                                                                    <div class="form-control-wrap">
+                                                                        <input value="{{ \Carbon\Carbon::parse($actions['delai'])->translatedFormat('j F Y ') }}" readonly type="text" class="form-control " id="Cause">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-lg-4">
+                                                                <div class="form-group ">
+                                                                    <label class="form-label" for="Cause">
+                                                                        Date de realisation
+                                                                    </label>
+                                                                    <div class="form-control-wrap">
+                                                                        <input value="{{ \Carbon\Carbon::parse($actions['date_action'])->translatedFormat('j F Y ') }}" readonly type="text" class="form-control " id="Cause">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-lg-4">
+                                                                <div class="form-group ">
+                                                                    <label class="form-label" for="Cause">
+                                                                        Date du Suivi
+                                                                    </label>
+                                                                    <div class="form-control-wrap">
+                                                                        <input value="{{ \Carbon\Carbon::parse($actions['date_suivi'])->translatedFormat('j F Y'.' à '.'H:i:s') }}" readonly type="text" class="form-control " id="Cause">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            @if ($actions['date_action'] <=  $actions['date_suivi'])
+                                                            <div class="col-lg-12">
+                                                                <div class="form-group text-center">
+                                                                    <div class="form-control-wrap">
+                                                                        <input value="Action Réaliser dans les délais" readonly type="text" class="form-control text-center bg-success" id="Cause">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            @elseif ($actions['date_action'] >  $actions['date_suivi'])
+                                                            <div class="col-lg-12">
+                                                                <div class="form-group text-center">
+                                                                    <div class="form-control-wrap">
+                                                                        <input value="Action Réaliser hors délais" readonly type="text" class="form-control text-center bg-warning" id="Cause">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            @endif
+                                                            <div class="col-lg-12">
+                                                                <div class="form-group">
+                                                                    <label class="form-label">
+                                                                        Commentaire
+                                                                    </label>
+                                                                    <div class="form-control-wrap">
+                                                                        <textarea readonly required name="causes" class="form-control no-resize" id="default-textarea">{{ $actions['commentaire_am'] }}</textarea>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        @elseif ($actions['statut'] === 'non-realiser')
+                                                        <div class="col-lg-12">
+                                                            <div class="form-group text-center">
+                                                                <div class="form-control-wrap">
+                                                                    <input value="Action Non Réaliser" readonly type="text" class="form-control text-center bg-danger" id="Cause">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        @endif
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        @endforeach
+                                        @if($am->efficacite !== null || $am->date1 !== null)
+                                        <div class="col-md-12 col-xxl-122" id="groupesContainer">
+                                            <div class="card ">
+                                                <div class="card-inner">
+                                                    <div class="card-head">
+                                                        <h5 class="card-title">
+                                                            Efficacité
+                                                        </h5>
+                                                    </div>
+                                                    <div class="row g-4">
+                                                        @if($am->date1 !== null)
+                                                        <div class="col-lg-4">
+                                                            <div class="form-group">
+                                                                <label class="form-label" for="Cause">
+                                                                    Du
+                                                                </label>
+                                                                <div class="form-control-wrap">
+                                                                    <input value="{{ \Carbon\Carbon::parse($am->date1)->translatedFormat('j F Y ') }}" readonly type="text" class="form-control" id="Cause">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-4">
+                                                            <div class="form-group">
+                                                                <label class="form-label" for="Cause">
+                                                                    au
+                                                                </label>
+                                                                <div class="form-control-wrap">
+                                                                    <input value="{{ \Carbon\Carbon::parse($am->date2)->translatedFormat('j F Y ') }}" readonly type="text" class="form-control" id="Cause">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        @php
+                                                            $startDate = \Carbon\Carbon::parse($am->date1);
+                                                            $endDate = \Carbon\Carbon::parse($am->date2);
+                                                            $daysDifference = $startDate->diffInDays($endDate);
+                                                        @endphp
+                                                        <div class="col-lg-4">
+                                                            <div class="form-group">
+                                                                <label class="form-label" for="Cause">
+                                                                    Nombre de jour(S)
+                                                                </label>
+                                                                <div class="form-control-wrap">
+                                                                    <input value="{{ $daysDifference }}" readonly type="text" class="form-control">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        @endif
+                                                        @if($am->efficacite !== null)
+                                                        <div class="col-lg-6">
+                                                            <div class="form-group">
+                                                                <label class="form-label" for="Cause">
+                                                                    Action efficace
+                                                                </label>
+                                                                @if ($am->efficacite === 'oui')
+                                                                <div class="form-control-wrap">
+                                                                    <input value="{{ $am->efficacite }}" readonly type="text" class="form-control bg-success text-center" id="Cause">
+                                                                </div>
+                                                                @endif
+                                                                @if ($am->efficacite === 'non')
+                                                                <div class="form-control-wrap">
+                                                                    <input value="{{ $am->efficacite }}" readonly type="text" class="form-control bg-danger text-center" id="Cause">
+                                                                </div>
+                                                                @endif
+                                                            </div>
+                                                            @if ($am->date_eff !== null)
+                                                            <div class="form-group">
+                                                                <label class="form-label" for="Cause">
+                                                                    Date de verification de l'éfficacité
+                                                                </label>
+                                                                @if ($am->date1 <= $am->date_eff && $am->date2 >= $am->date_eff)
+                                                                    <div class="form-control-wrap">
+                                                                        <input value="{{ \Carbon\Carbon::parse($am->date_eff)->translatedFormat('j F Y ') }}" readonly type="text" class="form-control text-center bg-success" id="Cause">
+                                                                    </div>
+                                                                @elseif ($am->date1 > $am->date_eff && $am->date2 >= $am->date_eff || $am->date1 <= $am->date_eff && $am->date2 < $am->date_eff)
+                                                                    <div class="form-control-wrap">
+                                                                        <input value="{{ \Carbon\Carbon::parse($am->date_eff)->translatedFormat('j F Y ') }}" readonly type="text" class="form-control text-center bg-danger" id="Cause">
+                                                                    </div>
+                                                                @endif
+                                                            </div>
+                                                            @else
+                                                            <div class="form-group">
+                                                                <label class="form-label" for="Cause">
+                                                                    Date de verification de l'éfficacité
+                                                                </label>
+                                                                <div class="form-control-wrap">
+                                                                    <input value="Néant" readonly type="text" class="form-control" id="Cause">
+                                                                </div>
+                                                            </div>
+                                                            @endif
+                                                        </div>
+                                                        <div class="col-lg-6">
+                                                            <div class="form-group">
+                                                                <label class="form-label" for="Cause">
+                                                                    Commentaire
+                                                                </label>
+                                                                <div class="form-control-wrap">
+                                                                    <textarea readonly required name="causes" class="form-control no-resize" id="default-textarea">{{ $am->commentaire_eff }}</textarea>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        @if ($am->date1 <= $am->date_eff && $am->date2 >= $am->date_eff)
+                                                            <div class="col-lg-12">
+                                                                <div class="form-group text-center">
+                                                                    <div class="form-control-wrap">
+                                                                        <input value="Vérification éffectuée dans les delais" readonly type="text" class="form-control text-center bg-success" id="Cause">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        @elseif ($am->date1 > $am->date_eff && $am->date2 >= $am->date_eff || $am->date1 <= $am->date_eff && $am->date2 < $am->date_eff)
+                                                            <div class="col-lg-12">
+                                                                <div class="form-group text-center">
+                                                                    <div class="form-control-wrap">
+                                                                        <input value="Vérification éffectuée hors delais" readonly type="text" class="form-control text-center bg-warning" id="Cause">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        @endif
+                                                        @endif
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        @endif
+                                    </div>
+                                </form>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
-    </div>
-    <!--<script>
-        // Vérifier si la connexion Internet est disponible avant d'utiliser Pusher
-        function checkInternetAndPusher() {
-            const online = navigator.onLine;
+            @endforeach
 
-            if (online) {
-                // Utiliser Pusher seulement si la connexion est disponible
-                // Votre code pour utiliser Pusher ici
-                // ...
-            } else {
-                // Si la connexion est perdue, rediriger vers une page spécifique
-                window.location.href = "/Internet indisponible"; // Remplacez par votre URL de page d'erreur
-            }
-        }
-
-        // Vérifier régulièrement l'état de la connexion (toutes les 5 secondes ici)
-        setInterval(checkInternetAndPusher, 2000);
-    </script>-->
-    <div class="modal fade" tabindex="-1" id="modalAlert2" aria-modal="true" style="position: fixed;" role="dialog" data-bs-backdrop="static" data-bs-keyboard="false">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-body modal-body-lg text-center">
-                    <div class="nk-modal">
-                        <em class="nk-modal-icon icon icon-circle icon-circle-xxl ni ni-cross bg-danger"></em>
-                        <h4 class="nk-modal-title">Session Expiré!</h4>
-                        <div class="nk-modal-action mt-5">
-                            <a class="btn btn-lg btn-mw btn-light">
-                                ok
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <script>
-        // Sélectionnez le bouton "ok" dans la modalité
-            const okButton = document.querySelector('#modalAlert2 .btn-light');
-
-            // Ajoutez un gestionnaire d'événements au clic sur le bouton "ok"
-            okButton.addEventListener('click', function() {
-                // Rechargez la page
-                location.reload();
-            });
-
-        </script>
-    <!--<script>
-
-            let inactivityTimeout;
-
-            function resetTimer() {
-                clearTimeout(inactivityTimeout);
-
-                inactivityTimeout = setTimeout(function() {
-                    // Code à exécuter lorsque l'utilisateur est inactif
-                    $('#modalAlert2').modal('show');
-                }, 300000); // Durée d'inactivité en millisecondes (par exemple, 5 minute ici)
-            }
-
-            // Lancer le minuteur au chargement de la page
-            window.onload = resetTimer;
-
-        </script>-->
-    <!--<script>
-            Pusher.logToConsole = true;
-
-            var pusher = new Pusher('9f9514edd43b1637ff61', {
-              cluster: 'eu'
-            });
-
-            var channel = pusher.subscribe('my-channel-user');
-            channel.bind('my-event-user', function(data) {
-                Swal.fire({
-                            title: "Alert!",
-                            text: "Session Expiré",
-                            icon: "error",
-                            confirmButtonColor: "#00d819",
-                            confirmButtonText: "OK",
-                            allowOutsideClick: false,
-                        }).then((result) => {
-                            if (result.isConfirmed) {
-                                location.reload();
-                            }
-                        });
-            });
-        </script>-->
-    <!--<script>
-            // JavaScript pour écouter les événements
-            const channel = pusher.subscribe('my-channel-user');
-
-            channel.bind('my-event-user', function(data) {
-                // Code pour afficher l'alerte ou réaliser une action visuelle
-                Swal.fire({
-                    title: "Alert!",
-                    text: "Session Expirée",
-                    icon: "error",
-                    confirmButtonColor: "#00d819",
-                    confirmButtonText: "OK",
-                    allowOutsideClick: false,
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        location.reload();
-                    }
-                });
-            });
-        </script>-->
-    <!--<script>
-
-            let idleTimer;
-            const idleTime = 300000; //5 min
-
-            function resetIdleTimer() {
-                clearTimeout(idleTimer);
-                idleTimer = setTimeout(showLogoutModal, idleTime);
-            }
-
-            function showLogoutModal() {
-                $('#modalAlert2').modal('show');
-            }
-        </script>-->
-
-    <script src="{{asset('assets/js/bundle0226.js')}}"></script>
-    <script src="{{asset('assets/js/scripts0226.js')}}"></script>
-    <script src="{{asset('assets/js/demo-settings0226.js')}}"></script>
-    <script src="{{asset('assets/js/libs/datatable-btns0226.js')}}"></script>
-    <link href="{{asset('notification/toastr.min.css')}}" rel="stylesheet">
-    <script src="{{asset('notification/toastr.min.js')}}"></script>
-
-    <!--<script>
-        let idleTimer;
-        const idleTime = 1200000;
-
-        function resetIdleTimer() {
-            clearTimeout(idleTimer);
-            idleTimer = setTimeout(showLogoutModal, idleTime);
-        }
-
-        function showLogoutModal() {
-            $('#modalAlert2').modal('show');
-        }
-
-        document.addEventListener('mousemove', resetIdleTimer);
-        document.addEventListener('keypress', resetIdleTimer);
-    </script>
-    <script>
-        document.getElementById('logoutBtn').addEventListener('click', function(event) {
-            event.preventDefault(); // Pour éviter le comportement par défaut du lien
-            window.location.reload();
-        });
-    </script>-->
-    <!--<script>
-        // Check if the browser supports the Notification API
-        if ("Notification" in window) {
-            // Request permission to show notifications
-            Notification.requestPermission().then(function (permission) {
-                if (permission === "granted") {
-                    // Check if the notification has already been shown
-                    if (!localStorage.getItem('notificationShown')) {
-                        // Permission has been granted, create a notification
-                        var notification = new Notification("Notification!", {
-                            icon: "BGFI_logo.png", // Replace with the path to your icon
-                            body: "Nouvelle action corrective.",
-                        });
-
-                        // Set a flag in local storage to indicate that the notification has been shown
-                        //localStorage.setItem('notificationShown', 'true');
-                    }
-                } else {
-                    console.warn("Notification permission denied");
-                }
-            });
-        } else {
-            console.warn("Notifications not supported in this browser");
-        }
-    </script>-->
-    <!--<script>
-        // Fonction pour interroger le contrôleur Laravel
-        function checkForCorrectiveAction() {
-            $.ajax({
-                url: '/check_actions',
-                method: 'GET',
-                success: function (data) {
-                    data.preventDefault();
-                    if (data.msg === 'oui') {
-                        // Afficher la notification uniquement s'il y a une action corrective et pas déjà affichée
-                        //if (!sessionStorage.getItem('correctiveActionShown')) {
-                            Swal.fire({
-                                title: "Information!",
-                                text: "Nouvelle(s) action(s) corrective a valider",
-                                icon: "info",
-                                showCancelButton: false,
-                                confirmButtonColor: "#3085d6",
-                                confirmButtonText: "OK",
-                                allowOutsideClick: false // Empêche la fermeture en cliquant à l'extérieur
-                            }).then((result) => {
-                                // Si l'utilisateur clique sur le bouton "OK"
-                                if (result.isConfirmed) {
-                                    // Requête AJAX pour effectuer la modification dans le contrôleur Laravel
-                                    $.ajax({
-                                        url: '/update_action_type',
-                                        method: 'GET',
-                                        success: function () {
-                                            // Recharger la page après la mise à jour
-                                            location.reload();
-                                        }
-                                    });
-                                }
-                            });
-
-
-                            // Enregistrer dans sessionStorage pour ne pas répéter le message
-                            //sessionStorage.setItem('correctiveActionShown', 'true');
-                        //}
-                    } //else {
-                        // S'il n'y a pas d'action corrective, effacer le sessionStorage
-                        //sessionStorage.removeItem('correctiveActionShown');
-                    //}
-                }
-            });
-        }
-
-        // Appeler la fonction toutes les 5 secondes
-        setInterval(checkForCorrectiveAction, 5000);
-    </script>-->
-    <!--<script>
-        window.Echo.channel('notif')
-            .listen('.App\\Events\\ActionUpdated', (e) => {
-                Swal.fire({
-                    title: "Information!",
-                    text: "Nouvelle(s) action(s) corrective a valider",
-                    icon: "info",
-                    showCancelButton: false,
-                    confirmButtonColor: "#3085d6",
-                    confirmButtonText: "OK",
-                    allowOutsideClick: false
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        location.reload();
-                    }
-                });
-            });
-    </script>-->
-    @if (session('success'))
-    <script>
-    toastr.success("{{ session('success') }}", " ", {
-        positionClass: "toast-top-left",
-        timeOut: 5e3,
-        debug: !1,
-        newestOnTop: !0,
-        preventDuplicates: !0,
-        showDuration: "300",
-        hideDuration: "1000",
-        extendedTimeOut: "1000",
-        showEasing: "swing",
-        showMethod: "fadeIn",
-        hideMethod: "fadeOut"
-    })
-
-    </script>
-    {{ session()->forget('success') }}
-    @endif
-    @if (session('error'))
-    <script>
-    toastr.error("{{ session('error') }}", " ", {
-        positionClass: "toast-top-left",
-        timeOut: 5e3,
-        debug: !1,
-        newestOnTop: !0,
-        preventDuplicates: !0,
-        showDuration: "300",
-        hideDuration: "1000",
-        extendedTimeOut: "1000",
-        showEasing: "swing",
-        showMethod: "fadeIn",
-        hideMethod: "fadeOut"
-    })
-
-    </script>
-    {{ session()->forget('error') }}
-    @endif
-    @if (session('info'))
-    <script>
-    toastr.info("{{ session('info') }}", " ", {
-        positionClass: "toast-top-left",
-        timeOut: 5e3,
-        debug: !1,
-        newestOnTop: !0,
-        preventDuplicates: !0,
-        showDuration: "300",
-        hideDuration: "1000",
-        extendedTimeOut: "1000",
-        showEasing: "swing",
-        showMethod: "fadeIn",
-        hideMethod: "fadeOut"
-    })
-
-    </script>
-    {{ session()->forget('info') }}
-    @endif
-    @if (session('warning'))
-    <script>
-    toastr.warning("{{ session('warning') }}", " ", {
-        positionClass: "toast-top-left",
-        timeOut: 5e3,
-        debug: !1,
-        newestOnTop: !0,
-        preventDuplicates: !0,
-        showDuration: "300",
-        hideDuration: "1000",
-        extendedTimeOut: "1000",
-        showEasing: "swing",
-        showMethod: "fadeIn",
-        hideMethod: "fadeOut"
-    })
-
-    </script>
-    {{ session()->forget('warning') }}
-    @endif
-</body>
-
-</html>
+@endsection          
 

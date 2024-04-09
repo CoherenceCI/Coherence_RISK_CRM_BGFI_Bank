@@ -195,7 +195,7 @@
                         <a href="#" class="close" data-bs-dismiss="modal" aria-label="Close"><em class="icon ni ni-cross"></em></a>
                     </div>
                     <div class="modal-body">
-                        <form method="post" action="{{ route('index_modif_cause') }}">
+                        <form id="form" method="post" action="{{ route('index_modif_cause') }}">
                             @csrf
                             <div class="row g-4 mb-4" id="poste-container">
                                 <div class="col-lg-12">

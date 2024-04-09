@@ -39,7 +39,7 @@
                                     <div class="card-inner">
                                         <table class="datatable-init table">
                                             <thead>
-                                                <tr class="">
+                                                <tr>
                                                     <th></th>
                                                     <th>Lieu</th>
                                                     <th>Détecteur</th>
@@ -54,7 +54,7 @@
                                             </thead>
                                             <tbody>
                                                 @foreach($ams as $key => $am)
-                                                    <tr class="">
+                                                    <tr>
                                                         <td>{{ $key+1 }}</td>
                                                         <td>{{ $am->lieu }}</td>
                                                         <td>{{ $am->detecteur }}</td>

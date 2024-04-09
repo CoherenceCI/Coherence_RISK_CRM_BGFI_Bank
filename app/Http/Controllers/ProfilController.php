@@ -63,18 +63,22 @@ class ProfilController extends Controller
 
     public function mdp_update(Request $request)
     {
-        $mdp2 = $request->input('mdp2');
-
-        $user = User::find(Auth::user()->id);
-        $user->password = bcrypt($mdp2);
-        $user->mdp_date = now()->format('Y-m-d\TH:i:s');
-        $user->update();
-
-        if ($user) {
-            return response()->json(['success' => true]);
+        if( $request->password !== $request->password2){
+            return back()->with('error' , 'Mot de passe incorrecte');
         }
 
-        return response()->json(['error' => true]);
+        $user = User::find(Auth::user()->id);
+
+        if ($user) {
+            $user->update([
+                'password' => bcrypt($request->password),
+                'mdp_date' => now(),
+            ]);
+
+            return back()->with('success' , 'Mot de passe modifié');
+        }
+
+        return back()->with('error' , 'Echec de la modification');
     }
 
     public function info_update(Request $request)
@@ -97,35 +101,6 @@ class ProfilController extends Controller
         return response()->json(['error' => true]);
     }
 
-    public function index_historique()
-    {
-        if (Auth::check() === false ) {
-            return redirect()->route('login');
-        }
-
-        $historiques = Historique_action::join('users', 'historique_actions.user_id', '=', 'users.id')
-                ->join('postes', 'users.poste_id', '=', 'postes.id')
-                ->orderBy('historique_actions.created_at', 'desc')
-                ->select('historique_actions.*', 'postes.nom as poste', 'users.name as nom', 'users.matricule as matricule')
-                ->get();
-
-       return view('historique.historique', ['historiques' => $historiques]);
-    }
-
-    public function index_historique_profil()
-    {
-        if (Auth::check() === false ) {
-            return redirect()->route('login');
-        }
-        
-        $historiques = Historique_action::join('users', 'historique_actions.user_id', '=', 'users.id')
-                ->join('poste', 'users.poste_id', '=', 'postes.id')
-                ->orderBy('historique_actions.created_at', 'desc')
-                ->where('historique_actions.user_id', Auth::user()->id)
-                ->select('historique_actions.*', 'postes.nom as poste', 'users.name as nom', 'users.matricule as matricule')
-                ->get();
-
-       return view('historique.historique_profil', ['historiques' => $historiques]);
-    }
+    
 
 }

@@ -24,7 +24,7 @@
             <div class="dropdown-inner">
                 <ul class="link-list">
                     <li class="mt-2" >
-                        <a class="btn btn-md btn-primary text-white action-new" data-type="nouvelle-action" >
+                        <a class="btn btn-md btn-info text-white action-new" data-type="nouvelle-action" >
                             <em class="icon ni ni-plus"></em>
                             <span>
                                 Réclamation
@@ -32,7 +32,7 @@
                         </a>
                     </li>
                     <li class="mt-2" >
-                        <a class="btn btn-md btn-primary text-white action-new-cause" data-type="nouvelle-action-cause">
+                        <a class="btn btn-md btn-warning text-white action-new-cause" data-type="nouvelle-action-cause">
                             <em class="icon ni ni-plus"></em>
                             <span>
                                 Cause
@@ -62,7 +62,7 @@
                                     </div>
                                 </div>
                             </div>
-                    <form class="nk-block" id="form_insert" method="post" action="{{ route('index_add') }}">
+                    <form class="nk-block" id="form" method="post" action="{{ route('index_add') }}">
                         @csrf
                         <div class="row g-gs">
                             <div class="col-lg-6 col-xxl-6" >
@@ -307,21 +307,7 @@
             </div>
         </div>
     </div>
-
-        <script>
-            document.getElementById("form_insert").addEventListener("submit", function(event) {
-                event.preventDefault(); // Empêche la soumission par défaut du formulaire
-
-                $('.modal').modal('hide');
-                $(`#modalLoad`).modal('hide');
-                $(`#modalLoad`).modal('show');
-
-                // Si toutes les validations passent, soumettre le formulaire
-                this.submit();
-            });
-        </script>
-
-
+    
     <script>
         $(document).ready(function() {
             // Écoutez l'événement de changement de l'élément select

@@ -39,7 +39,7 @@
                                     <div class="card-inner">
                                         <table class="datatable-init table">
                                             <thead>
-                                                <tr class="text-center">
+                                                <tr>
                                                     <th></th>
                                                     <th>Approvisionnement</th>
                                                     <th>Finalié</th>
@@ -50,7 +50,7 @@
                                             </thead>
                                             <tbody>
                                                 @foreach ($processus as $key => $processu)
-                                                    <tr class="text-center">
+                                                    <tr>
                                                         <td>{{ $key+1}}</td>
                                                         <td>{{ $processu->nom}}</td>
                                                         <td>{{ $processu->finalite}}</td>
@@ -73,7 +73,7 @@
                                                                     </a>-->
                                                                     @if($processu->pdf_nom != null)
                                                                     <a href="{{ asset('storage/pdf/'.$processu->pdf_nom) }}" 
-                                                                        href="#" class="btn btn-icon btn-white btn-dim btn-sm btn-info border border-1 border-white rounded">
+                                                                        target="_bank" class="btn btn-icon btn-white btn-dim btn-sm btn-info border border-1 border-white rounded">
                                                                         <em class="icon ni ni-download"></em>
                                                                     </a>
                                                                     @endif

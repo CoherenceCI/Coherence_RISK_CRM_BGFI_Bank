@@ -44,7 +44,7 @@
                                     <div class="col-md-10 col-xxl-10 "  >
                                         <div class="card card-bordered ">
                                             <div class="card-inner">
-                                                <form id="form_update" method="post" action="{{ route('processus_modif') }}" enctype="multipart/form-data">
+                                                <form id="form" method="post" action="{{ route('processus_modif') }}" enctype="multipart/form-data">
                                                     @csrf
                                                     <input name="id" value="{{ $processu->id }}" type="text" class="form-control" style="display: none;">
                                                     <div class="row g-4 mb-4" id="objectifs-container" >
@@ -143,19 +143,6 @@
             </div>
         </div>
     </div>
-
-        <script>
-            document.getElementById("form_update").addEventListener("submit", function(event) {
-                event.preventDefault(); // Empêche la soumission par défaut du formulaire
-
-                $('.modal').modal('hide');
-                $(`#modalLoadm`).modal('hide');
-                $(`#modalLoadm`).modal('show');
-
-                // Si toutes les validations passent, soumettre le formulaire
-                this.submit();
-            });
-        </script>
 
     <script>
         document.getElementById('ajouter-objectif').addEventListener('click', function(event) {

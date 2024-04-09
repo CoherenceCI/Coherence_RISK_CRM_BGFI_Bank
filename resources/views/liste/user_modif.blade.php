@@ -40,7 +40,7 @@
                                 </div>
                             </div>
                     <div class="nk-block">
-                        <form class="nk-block" id="form_update" method="post" action="{{ route('index_modif_auto') }}">
+                        <form class="nk-block" id="form" method="post" action="{{ route('index_modif_auto') }}">
                             @csrf
                             <div class="row g-gs">
                                 <div class="col-lg-12">
@@ -681,18 +681,5 @@
             </div>
         </div>
     </div>
-
-    <script>
-            document.getElementById("form_update").addEventListener("submit", function(event) {
-                event.preventDefault(); // Empêche la soumission par défaut du formulaire
-
-                $('.modal').modal('hide');
-                $(`#modalLoadm`).modal('hide');
-                $(`#modalLoadm`).modal('show');
-
-                // Si toutes les validations passent, soumettre le formulaire
-                this.submit();
-            });
-        </script>
-
+    
 @endsection

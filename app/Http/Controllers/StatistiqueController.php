@@ -46,22 +46,12 @@ class StatistiqueController extends Controller
 
         $causes = Cause::all();
 
-        foreach ($causes as $cause) {
-            $cause->nbre_suivi = Suivi_action::where('cause_id', $cause->id)->count();
-        }
-
-        // Trier les causes par le nombre de suivis (du plus grand au plus petit)
-        $causes = $causes->sortByDesc('nbre_suivi');
-
-        $dataLabels = [];
-        $dataCounts = [];
-
-        foreach ($causes as $key => $cause) {
-            // Ajout des informations pour le graphique
-            $dataLabels[] = $cause->nom; // Utilisez le champ approprié pour les labels, j'ai utilisé 'nom' comme exemple
-            $dataCounts[] = $cause->nbre_suivi;
-        }
         $causes_tri = Cause::inRandomOrder()->take(3)->get();
+
+        foreach ($causes_tri as $key => $causes_tr) {
+            $causes_tr->nbre = Amelioration::where('cause_id', $causes_tr->id)->count();
+        }
+
         $causes_nbre = count($causes);
 
         //------------------------------------------------
@@ -74,37 +64,40 @@ class StatistiqueController extends Controller
                         ->get();
         $users_nbre = count($users);
 
+        //------------------------------------------------
+
+        $esc_oui = Amelioration::where('escaladeur', 'oui')->count();
+        $esc_non = Amelioration::where('escaladeur', 'non')->count();
+
+        //------------------------------------------------
+
+        $rech_tr_cause = Amelioration::where('choix_select', 'cause')->count();
+        $rech_tr_recla = Amelioration::where('choix_select', 'reclamation')->count();
+        $rech_tr_n = Amelioration::where('choix_select', 'neant')->count();
+
+        //------------------------------------------------
+
+        $rech_nt = Amelioration::where('statut', 'soumis')->count();
+        $rech_en = Amelioration::where('statut', 'non-valider')
+                                ->orWhere('statut', 'update')
+                                ->orWhere('statut', 'valider')
+                                ->orWhere('statut', 'terminer')
+                                ->orWhere('statut', 'date_efficacite')
+                                ->count();
+        $rech_t = Amelioration::where('statut', 'cloturer')->count();
+
 
         return view('statistique.index', [
             'proces' => $proces, 'proces_nbre' => $proces_nbre, 
-            'reclas' => $reclas, 'reclas_nbre' => $reclas_nbre, 'reclas_tri' => $reclas_tri,
-            'causes' => $causes, 'causes_nbre' => $causes_nbre, 'causes_tri' => $causes_tri, 'dataLabels' => $dataLabels, 'dataCounts' => $dataCounts,
-
+            'reclas' => $reclas, 'reclas_nbre' => $reclas_nbre, 
+            'reclas_tri' => $reclas_tri,'causes' => $causes, 
+            'causes_nbre' => $causes_nbre, 'causes_tri' => $causes_tri,
             'users' => $users, 'users_nbre' => $users_nbre, 'users_tri' => $users_tri,
-            'ams' => $ams, 'ams_nbre' => $ams_nbre
+            'ams' => $ams, 'ams_nbre' => $ams_nbre,'esc_oui' => $esc_oui, 'esc_non' => $esc_non,
+            'rech_tr_cause' => $rech_tr_cause, 'rech_tr_recla' => $rech_tr_recla, 'rech_tr_n' => $rech_tr_n,
+            'rech_nt' => $rech_nt, 'rech_en' => $rech_en, 'rech_t' => $rech_t,
         ]);
 
     }
 
-    public function get_date(Request $request)
-    {
-        $date1 = Carbon::parse($request->input('date1'))->startOfDay();
-        $date2 = Carbon::parse($request->input('date2'))->endOfDay();
-
-        $causes = Cause::join('suivi_actions', 'causes.id', '=', 'suivi_actions.cause_id')
-                        ->join('ameliorations', 'suivi_actions.amelioration_id', '=', 'ameliorations.id')
-                        ->whereBetween('ameliorations.date_fiche', [$date1, $date2])
-                        ->select('causes.nom', DB::raw('COUNT(suivi_actions.id) as nbre_suivi'))
-                        ->groupBy('causes.id')
-                        ->orderByDesc('nbre_suivi')
-                        ->get();
-
-        $dataLs = $causes->pluck('nom');
-        $dataCs = $causes->pluck('nbre_suivi');
-
-        return response()->json([
-            'dataLs' => $dataLs,
-            'dataCs' => $dataCs,
-        ]);
-    }
 }

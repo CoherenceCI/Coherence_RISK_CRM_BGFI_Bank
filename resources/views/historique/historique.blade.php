@@ -37,7 +37,7 @@
                                     <div class="card-inner">
                                         <table class="datatable-init table" data-export-title="Export">
                                             <thead>
-                                                <tr class="text-center">
+                                                <tr>
                                                     <th></th>
                                                     <th>Date et heure</th>
                                                     <th>Action éffecttuée</th>
@@ -49,7 +49,7 @@
                                             </thead>
                                             <tbody>
                                                 @foreach ($historiques as $key => $historique)
-                                                    <tr class="text-center">
+                                                    <tr>
                                                         <td>{{ $key+1 }}</td>
                                                         <td>{{ \Carbon\Carbon::parse($historique->created_at)->translatedFormat('j F Y '.' à '.' H:i:s') }}</td>
                                                         <td>{{ $historique->nom_action }}</td>

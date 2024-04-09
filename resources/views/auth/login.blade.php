@@ -29,7 +29,7 @@
                                         <h4 class="nk-block-title">Utilisateur</h4>
                                     </div>
                                 </div>
-                                <form action="/auth_user" method="post">
+                                <form id="login" action="/auth_user" method="post">
                                     @csrf
                                     <div class="form-group">
                                         <div class="form-label-group">
@@ -61,21 +61,67 @@
         </div>
     </div>
 
+    <script>
+        document.getElementById("login").addEventListener("submit", function(event) {
+            event.preventDefault(); // Empêche la soumission par défaut du formulaire
+
+            // Récupération des valeurs des champs
+            var email = document.getElementById("email").value;
+            var password1 = document.getElementById("password").value;
+
+            // Validation des champs
+            if (!email || !password1 ) {
+                toastr.warning("Veuillez remplir tous les champs.");
+                return false;
+            }
+
+            var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // Expression régulière pour valider l'e-mail
+            if (!emailRegex.test(email)) {
+                toastr.info("Veuillez saisir une adresse e-mail valide.");
+                return false;
+            }
+
+            var password = document.getElementById("password").value;
+            // Vérification si le mot de passe satisfait les critères
+            if (!verifierMotDePasse(password)) {
+                // Empêcher la soumission du formulaire si le mot de passe est invalide
+                event.preventDefault();
+                // Afficher un message d'erreur
+                toastr.info("Le mot de passe doit comporter au moins 8 caractères, une lettre majuscule, une lettre minuscule et un chiffre.");
+                return false;
+            }
+
+            // Si toutes les validations passent, soumettre le formulaire
+            this.submit();
+
+            function verifierMotDePasse(motDePasse) {
+                // Vérification de la longueur
+                if (motDePasse.length < 8) {
+                    return false;
+                }
+                // Vérification s'il contient au moins une lettre majuscule
+                if (!/[A-Z]/.test(motDePasse)) {
+                    return false;
+                }
+                // Vérification s'il contient au moins une lettre minuscule
+                if (!/[a-z]/.test(motDePasse)) {
+                    return false;
+                }
+                // Vérification s'il contient au moins un chiffre
+                if (!/\d/.test(motDePasse)) {
+                    return false;
+                }
+                // Si toutes les conditions sont satisfaites, le mot de passe est valide
+                return true;
+            }
+        });
+    </script>
+
     <script src="{{asset('assets/js/bundle0226.js')}}"></script>
     <script src="{{asset('assets/js/scripts0226.js')}}"></script>
     <script src="{{asset('assets/js/demo-settings0226.js')}}"></script>
     <link href="{{asset('notification/toastr.min.css')}}" rel="stylesheet">
     <script src="{{asset('notification/toastr.min.js')}}"></script>
-
-    <script>
-        // Fonction pour rafraîchir la page
-        function refreshPage() {
-            location.reload();
-        }
-
-        // Rafraîchir la page toutes les 5 minutes (300 000 millisecondes)
-        setInterval(refreshPage, 300000);
-    </script>
 
     @if (session('error'))
         <script>

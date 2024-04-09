@@ -37,7 +37,7 @@
                                     <div class="card-inner">
                                         <table class="datatable-init table">
                                             <thead>
-                                                <tr class="text-center">
+                                                <tr>
                                                     <th></th>
                                                     <th>Action</th>
                                                     <th>Réclamation</th>
@@ -50,7 +50,7 @@
                                             <tbody>
                                                 @foreach($ams as $key => $am)
                                                     @if($am->nbre_am > 0)
-                                                    <tr class="text-center">
+                                                    <tr>
                                                         <td>{{ $key+1 }}</td>
                                                         <td>{{ $am->action }}</td>
                                                         <td>{{ $am->reclamation }}</td>
@@ -205,7 +205,7 @@
                     </div>
                     <div class="modal-body">
                         <div class="nk-block">
-                            <form class="row g-gs" id="form_insert" method="post" action="/Suivi_action/{{ $am->id }}">
+                            <form id="form" class="row g-gs" id="form_insert" method="post" action="/Suivi_action/{{ $am->id }}">
                                 @csrf
                                 <div class="col-lg-12 col-xxl-12" >
                                     <div class="card">
@@ -292,19 +292,6 @@
             </div>
         </div>
     @endforeach
-
-        <script>
-            document.getElementById("form_insert").addEventListener("submit", function(event) {
-                event.preventDefault(); // Empêche la soumission par défaut du formulaire
-
-                $('.modal').modal('hide');
-                $(`#modalLoad`).modal('hide');
-                $(`#modalLoad`).modal('show');
-
-                // Si toutes les validations passent, soumettre le formulaire
-                this.submit();
-            });
-        </script>
 
     <script>
         Pusher.logToConsole = true;

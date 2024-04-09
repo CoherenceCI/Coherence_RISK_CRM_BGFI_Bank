@@ -39,7 +39,7 @@
                                     <div class="card-inner">
                                         <table class="datatable-init table">
                                             <thead>
-                                                <tr class="">
+                                                <tr>
                                                     <th></th>
                                                     <th>Lieu</th>
                                                     <th>Détecteur</th>
@@ -51,7 +51,7 @@
                                             </thead>
                                             <tbody>
                                                 @foreach($ams as $key => $am)
-                                                    <tr class="">
+                                                    <tr>
                                                         <td>{{ $key+1 }}</td>
                                                         <td>{{ $am->lieu }}</td>
                                                         <td>{{ $am->detecteur }}</td>
@@ -295,7 +295,7 @@
                                 </div>
                             </div>
                             <div class="nk-modal-action">
-                                <a id="form_val" href="/valider/{{ $am->id }}" class="btn btn-lg btn-mw btn-success me-2">
+                                <a id="form_click" href="/valider/{{ $am->id }}" class="btn btn-lg btn-mw btn-success me-2">
                                     oui
                                 </a>
                                 <a href="#" class="btn btn-lg btn-mw btn-danger"data-bs-dismiss="modal">
@@ -318,7 +318,7 @@
                             aria-label="Close"><em class="icon ni ni-cross"></em></a>
                     </div>
                     <div class="modal-body">
-                        <form id="form_rejet" action="{{ route('rejet_recla') }}" method="post" >
+                        <form id="form" action="{{ route('rejet_recla') }}" method="post" >
                             @csrf
                             <div class="form-group">
                                 <label class="form-label" for="pay-amount">Motif</label>
@@ -338,26 +338,6 @@
             </div>
         </div>
     @endforeach
-
-        <script>
-            document.getElementById("form_val").addEventListener("click", function(event) {
-
-                $('.modal').modal('hide');
-                $(`#modalLoadv`).modal('hide');
-                $(`#modalLoadv`).modal('show');
-
-            });
-            document.getElementById("form_rejet").addEventListener("submit", function(event) {
-                event.preventDefault(); // Empêche la soumission par défaut du formulaire
-                
-                $('.modal').modal('hide');
-                $(`#modalLoadr`).modal('hide');
-                $(`#modalLoadr`).modal('show');
-
-                // Si toutes les validations passent, soumettre le formulaire
-                this.submit();
-            });
-        </script>
 
     <script>
         Pusher.logToConsole = true;

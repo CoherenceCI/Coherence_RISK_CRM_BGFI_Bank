@@ -4,13 +4,23 @@
 
 @section('option_btn')
 
-    <li class="dropdown chats-dropdown">
-        <a href="{{ route('index_accueil') }}" class="dropdown-toggle nk-quick-nav-icon">
-            <div class="icon-status icon-status-na">
-                <em class="icon ni ni-home"></em>
-            </div>
-        </a>
-    </li>
+    @if (session('user_poste')->nom !== 'ESCALADEUR')
+        <li class="dropdown chats-dropdown">
+            <a href="{{ route('index_accueil') }}" class="dropdown-toggle nk-quick-nav-icon">
+                <div class="icon-status icon-status-na">
+                    <em class="icon ni ni-home"></em>
+                </div>
+            </a>
+        </li>
+    @else
+        <li class="dropdown chats-dropdown">
+            <a href="{{ route('index_accueil_escaladeur') }}" class="dropdown-toggle nk-quick-nav-icon">
+                <div class="icon-status icon-status-na">
+                    <em class="icon ni ni-home"></em>
+                </div>
+            </a>
+        </li>
+    @endif
 
 @endsection
 
@@ -58,7 +68,7 @@
                             <div class="card card-bordered">
                                 <div class="card-aside-wrap">
                                     <div class=" card card-inner card-inner-lg">
-                                        <ul class="nav nav-tabs nav-tabs-s2">
+                                        <!--<ul class="nav nav-tabs nav-tabs-s2">
                                             <li class="nav-item">
                                                 <a class="nav-link active" data-bs-toggle="tab" href="#tabItem1">
                                                     <em class="icon ni ni-user"></em>
@@ -71,11 +81,12 @@
                                                     <span>Paramette de Sécurité</span>
                                                 </a>
                                             </li>
-                                        </ul>
+                                        </ul>-->
                                         <div class="tab-content">
                                             <div class="tab-pane active" id="tabItem1">
                                                 <div class="card-aside-wrap">
                                                     <div class="card-inner card-inner-lg">
+
                                                         <div class="nk-block-head nk-block-head-lg">
                                                             <div class="nk-block-between">
                                                                 <div class="nk-block-head-content">
@@ -165,12 +176,7 @@
                                                                 </div>
                                                             </div>-->
                                                         </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="tab-pane" id="tabItem2">
-                                                <div class="card-aside-wrap">
-                                                    <div class="card-inner card-inner-lg">
+
                                                         <div class="nk-block-head nk-block-head-lg">
                                                             <div class="nk-block-between">
                                                                 <div class="nk-block-head-content">
@@ -259,6 +265,14 @@
                                                                 </div>
                                                             </div>
                                                         </div>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="tab-pane" id="tabItem2">
+                                                <div class="card-aside-wrap">
+                                                    <div class="card-inner card-inner-lg">
+                                                        
                                                     </div>
                                                 </div>
                                             </div>
@@ -273,7 +287,6 @@
         </div>
     </div>
 </div>
-
 
 <div class="modal fade" role="dialog" id="profile-edit">
     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
@@ -353,30 +366,97 @@
                 </ul>
                 <div class="tab-content">
                     <div class="tab-pane active" id="personal">
-                        <div class="row gy-4">
+                        <form id="form_password" class="row gy-4" method="post" action="{{ route('mdp_update') }}" >
+                            @csrf
                             <div class="col-lg-12">
-                                <div class="form-control-wrap"><a tabindex="-1" href="#" class="form-icon form-icon-right passcode-switch lg" data-target="password"></a><input autocomplete="off" type="password" class="form-control form-control-lg " id="password2" placeholder="Saisie le nouveau mot de passe" name="mdp_new"></div>
+                                <div class="form-group">
+                                    <div class="form-control-wrap">
+                                        <a href="#" class="form-icon form-icon-right passcode-switch lg" data-target="password">
+                                            <em class="passcode-icon icon-show icon ni ni-eye"></em>
+                                            <em class="passcode-icon icon-hide icon ni ni-eye-off"></em>
+                                        </a>
+                                        <input required type="password" name="password" class="form-control form-control-lg" id="password" placeholder="Nouveau Mot de passe">
+                                    </div>
+                                </div>
                             </div>
                             <div class="col-lg-12">
-                                <div class="form-control-wrap"><a tabindex="-1" href="#" class="form-icon form-icon-right passcode-switch lg" data-target="password"></a><input autocomplete="off" type="password" class="form-control form-control-lg " id="password3" placeholder="Confirmer le nouveau mot de passe" name="mdp_new_conf"></div>
+                                <div class="form-group">
+                                    <div class="form-control-wrap">
+                                        <a href="#" class="form-icon form-icon-right passcode-switch lg" data-target="password2">
+                                            <em class="passcode-icon icon-show icon ni ni-eye"></em>
+                                            <em class="passcode-icon icon-hide icon ni ni-eye-off"></em>
+                                        </a>
+                                        <input required type="password" name="password2" class="form-control form-control-lg" id="password2" placeholder="Confirmer le mot de passe">
+                                    </div>
+                                </div>
                             </div>
                             <div class="col-12">
                                 <ul class="align-center flex-wrap flex-sm-nowrap gx-4 gy-2">
                                     <li>
-                                        <button id="btn_change_mdp" class="btn btn-lg btn-success btn-dim">
+                                        <button type="submit" class="btn btn-lg btn-success btn-dim">
                                             <em class="ni ni-check me-2 "></em>
                                             <em >Enregistrer</em>
                                         </button>
                                     </li>
                                 </ul>
                             </div>
-                        </div>
+                        </form>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
+    <script>
+        document.getElementById("form_password").addEventListener("submit", function(event) {
+            event.preventDefault(); // Empêche la soumission par défaut du formulaire
+
+            var password = document.getElementById("password").value;
+            var password2 = document.getElementById("password2").value;
+
+            if (password !== password2){
+                toastr.error("Mot de passe incorrect.");
+                return false;
+            }
+
+            if (!verifierMotDePasse(password) || !verifierMotDePasse(password2)) {
+                // Empêcher la soumission du formulaire si le mot de passe est invalide
+                event.preventDefault();
+                // Afficher un message d'erreur
+                toastr.warning("Le mot de passe doit comporter au moins 8 caractères, une lettre majuscule, une lettre minuscule et un chiffre.");
+                return false;
+            }
+
+            $('.modal').modal('hide');
+            $(`#modalt`).modal('hide');
+            $(`#modalt`).modal('show');
+
+            // Si toutes les validations passent, soumettre le formulaire
+            this.submit();
+
+            function verifierMotDePasse(motDePasse) {
+                // Vérification de la longueur
+                if (motDePasse.length < 8) {
+                    return false;
+                }
+                // Vérification s'il contient au moins une lettre majuscule
+                if (!/[A-Z]/.test(motDePasse)) {
+                    return false;
+                }
+                // Vérification s'il contient au moins une lettre minuscule
+                if (!/[a-z]/.test(motDePasse)) {
+                    return false;
+                }
+                // Vérification s'il contient au moins un chiffre
+                if (!/\d/.test(motDePasse)) {
+                    return false;
+                }
+                // Si toutes les conditions sont satisfaites, le mot de passe est valide
+                return true;
+            }
+        });
+    </script>
 
 <script>
     var inputElement = document.getElementById('tel');
@@ -427,49 +507,6 @@
 </script>
 
 <script>
-    const btn = document.getElementById('btn_change_mdp');
-
-    btn.addEventListener('click', function(event) {
-        event.preventDefault();
-
-        const mdp2 = document.getElementById('password2').value;
-        const mdp3 = document.getElementById('password3').value;
-
-        if (mdp2 ==='' || mdp3 ==='') {
-
-            toastr.warning("Veuillez remplir tous les champs.");
-
-        } else {
-
-            if (mdp2 === mdp3) {
-                $.ajax({
-                    url: '/mdp_update',
-                    method: 'GET',
-                    data: {mdp2: mdp2},
-                    success: function() {
-                        document.getElementById('password2').value='';
-                        document.getElementById('password3').value='';
-
-                        const modal = document.getElementById('profile-edit-mdp');
-                        const bootstrapModal = bootstrap.Modal.getInstance(modal); // Obtenez l'instance du modal
-                        if (bootstrapModal) {
-                            bootstrapModal.hide(); // Masquer le modal
-                        }
-
-                        toastr.success("Mot de passe modifié.");
-                    },
-                    error: function() {
-                        toastr.error("Mot de passe incorrect.");
-                    }
-                });
-            } else {
-                toastr.info("Nouveau mot de passe incorrect.");
-            }
-        }
-    });
-</script>
-
-<script>
     const btn0 = document.getElementById('btn_change_info');
 
     btn0.addEventListener('click', function(event) {
@@ -495,6 +532,10 @@
 
                     toastr.warning("Verifier l'email saisie.");
                 } else {
+
+                    $('.modal').modal('hide');
+                    $(`#modalt`).modal('hide');
+                    $(`#modalt`).modal('show');
 
                     $.ajax({
                         url: '/info_update',
@@ -523,7 +564,5 @@
         }
     });
 </script>
-
-
 
 @endsection

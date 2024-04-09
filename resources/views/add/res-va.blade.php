@@ -31,7 +31,7 @@
                                 </div>
                             </div>
                     <div class="nk-block">
-                        <form class="row g-gs" id="form_insert" method="post" action="{{ route('add_user') }}">
+                        <form class="row g-gs" id="form" method="post" action="{{ route('add_user') }}">
                             @csrf
                             <div class="col-lg-8" style="margin: 20px auto;">
                                 <div class="row g-gs" >
@@ -39,16 +39,6 @@
                                         <div class="card card-bordered">
                                             <div class="card-inner">
                                                     <div class="row g-4">
-                                                        <div class="col-lg-12">
-                                                            <div class="form-group">
-                                                                <label class="form-label" for="Cause">
-                                                                    Matricule
-                                                                </label>
-                                                                <div class="form-control-wrap">
-                                                                    <input placeholder="le matricule est génerer automatiquement" id="matricule" autocomplete="off" required name="matricule" type="text" class="form-control" id="Cause" readonly>
-                                                                </div>
-                                                            </div>
-                                                        </div>
                                                         <div class="col-lg-6">
                                                             <div class="form-group">
                                                                 <label class="form-label" for="Cause">
@@ -77,7 +67,7 @@
                                                                     </label>
                                                                 </div>
                                                                 <div class="form-control-wrap">
-                                                                    <a tabindex="-1" href="#" class="form-icon form-icon-right passcode-switch lg" data-target="password">
+                                                                    <a tabindex="-1" href="#" class="form-icon form-icon-right passcode-switch" data-target="password">
                                                                         <em class="passcode-icon icon-show icon ni ni-eye"></em>
                                                                         <em class="passcode-icon icon-hide icon ni ni-eye-off">
                                                                         </em>
@@ -123,6 +113,16 @@
                                                                     </option>
                                                                     @endforeach
                                                                 </select>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-12">
+                                                            <div class="form-group">
+                                                                <label class="form-label" for="Cause">
+                                                                    Matricule
+                                                                </label>
+                                                                <div class="form-control-wrap">
+                                                                    <input placeholder="le matricule est génerer automatiquement" id="matricule" autocomplete="off" required name="matricule" type="text" class="form-control" id="Cause" readonly>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -600,17 +600,90 @@
     </script>
 
     <script>
-            document.getElementById("form_insert").addEventListener("submit", function(event) {
-                event.preventDefault(); // Empêche la soumission par défaut du formulaire
+        document.getElementById("form_login").addEventListener("submit", function(event) {
+            event.preventDefault(); // Empêche la soumission par défaut du formulaire
 
-                $('.modal').modal('hide');
-                $(`#modalLoadm`).modal('hide');
-                $(`#modalLoadm`).modal('show');
+            // Récupération des valeurs des champs
+            var email = document.getElementById("email").value;
+            var password1 = document.getElementById("password").value;
 
-                // Si toutes les validations passent, soumettre le formulaire
-                this.submit();
-            });
-        </script>
+            var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // Expression régulière pour valider l'e-mail
+            if (!emailRegex.test(email)) {
+                toastr.info("Veuillez saisir une adresse e-mail valide.");
+                return false;
+            }
+            
+            if (!verifierMotDePasse(password1)) {
+                // Afficher un message d'erreur
+                toastr.info("Le mot de passe doit comporter au moins 8 caractères, une lettre majuscule, une lettre minuscule et un chiffre.");
+                return false;
+            }
 
+            $('.modal').modal('hide');
+            $(`#modalt`).modal('hide');
+            $(`#modalt`).modal('show');
+
+            // Si toutes les validations passent, soumettre le formulaire
+            this.submit();
+
+            function verifierMotDePasse(motDePasse) {
+                // Vérification de la longueur
+                if (motDePasse.length < 8) {
+                    return false;
+                }
+
+                // Vérification s'il contient au moins une lettre majuscule
+                if (!/[A-Z]/.test(motDePasse)) {
+                    return false;
+                }
+
+                // Vérification s'il contient au moins une lettre minuscule
+                if (!/[a-z]/.test(motDePasse)) {
+                    return false;
+                }
+
+                // Vérification s'il contient au moins un chiffre
+                if (!/\d/.test(motDePasse)) {
+                    return false;
+                }
+
+                // Si toutes les conditions sont satisfaites, le mot de passe est valide
+                return true;
+            }
+
+        });
+    </script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+
+            const passwordInput = document.getElementById('password');
+            const generatedPassword = generatePassword();
+            passwordInput.value = generatedPassword;
+
+            function generatePassword() {
+                const uppercaseChars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+                const lowercaseChars = 'abcdefghijklmnopqrstuvwxyz';
+                const numericChars = '0123456789';
+
+                let password = '';
+
+                password += uppercaseChars[Math.floor(Math.random() * uppercaseChars.length)];
+                password += lowercaseChars[Math.floor(Math.random() * lowercaseChars.length)];
+                password += numericChars[Math.floor(Math.random() * numericChars.length)];
+
+                for (let i = 0; i < 7; i++) {
+                    const allChars = uppercaseChars + lowercaseChars + numericChars;
+                    password += allChars[Math.floor(Math.random() * allChars.length)];
+                }
+
+                password = password.split('').sort(function() {
+                    return 0.5 - Math.random();
+                }).join('');
+
+                return password;
+            }
+        });
+    </script>
 
 @endsection

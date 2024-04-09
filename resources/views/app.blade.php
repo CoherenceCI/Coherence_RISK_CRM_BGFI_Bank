@@ -59,229 +59,231 @@
                                 </div>
                             </div>
                             @if (Auth::check())
-                            <ul class="nk-menu nk-menu-main ui-s2">
-                                @if (session('user_auto')->new_user === 'oui' || session('user_auto')->new_poste === 'oui' || session('user_auto')->historiq === 'oui' || session('user_auto')->stat === 'oui')
-                                <li class="nk-menu-item has-sub">
-                                    <a class="nk-menu-toggle btn " >
-                                        <em class="ni ni-building me-2"></em>
-                                        <span class="nk-menu-text text-dark">
-                                            Administration
-                                        </span>
-                                    </a>
-                                    <ul class="nk-menu-sub">
-                                        @if (session('user_auto')->new_user === 'oui')
-                                        <li >
-                                            <a class="nk-menu-link" href="{{ route('index_add_resva') }}">
-                                                <em class="icon ni ni-user-add me-1"></em>
-                                                <span class="nk-menu-text ">
-                                                    Nouveau utilisateur
+                                @if (session('user_poste')->nom !== 'ESCALADEUR')
+                                    <ul class="nk-menu nk-menu-main ui-s2">
+                                        @if (session('user_auto')->new_user === 'oui' || session('user_auto')->new_poste === 'oui' || session('user_auto')->historiq === 'oui' || session('user_auto')->stat === 'oui')
+                                        <li class="nk-menu-item has-sub">
+                                            <a class="nk-menu-toggle btn " >
+                                                <em class="ni ni-building me-2"></em>
+                                                <span class="nk-menu-text text-dark">
+                                                    Administration
                                                 </span>
                                             </a>
+                                            <ul class="nk-menu-sub">
+                                                @if (session('user_auto')->new_user === 'oui')
+                                                <li >
+                                                    <a class="nk-menu-link" href="{{ route('index_add_resva') }}">
+                                                        <em class="icon ni ni-user-add me-1"></em>
+                                                        <span class="nk-menu-text ">
+                                                            Nouveau utilisateur
+                                                        </span>
+                                                    </a>
+                                                </li>
+                                                @endif
+                                                @if (session('user_auto')->list_user === 'oui')
+                                                <li >
+                                                    <a class="nk-menu-link" href="{{ route('index_liste_resva') }}">
+                                                        <em class="icon ni ni-list me-1"></em>
+                                                        <span class="nk-menu-text ">
+                                                            Liste des utilisateurs
+                                                        </span>
+                                                    </a>
+                                                </li>
+                                                @endif
+                                                @if (session('user_auto')->new_poste === 'oui')
+                                                <li >
+                                                    <a data-bs-toggle="modal" data-bs-target="#modalPoste" class="nk-menu-link">
+                                                        <em class="ni ni-reports-alt me-1"></em>
+                                                        <span class="nk-menu-text ">
+                                                            Nouveau poste
+                                                        </span>
+                                                    </a>
+                                                </li>
+                                                @endif
+                                                @if (session('user_auto')->list_poste === 'oui')
+                                                <li >
+                                                    <a href="{{ route('index_liste_poste') }}" class="nk-menu-link">
+                                                        <em class="ni ni-list me-1"></em>
+                                                        <span class="nk-menu-text ">
+                                                            Liste des postes
+                                                        </span>
+                                                    </a>
+                                                </li>
+                                                @endif
+                                                @if (session('user_auto')->historiq === 'oui')
+                                                <li>
+                                                    <a class="nk-menu-link" href="{{ route('index_historique') }}">
+                                                        <em class="icon ni ni-property me-1"></em>
+                                                        <span class="nk-menu-text " >
+                                                            historique
+                                                        </span>
+                                                    </a>
+                                                </li>
+                                                @endif
+                                                @if (session('user_auto')->stat === 'oui')
+                                                <li>
+                                                    <a class="nk-menu-link" href="{{ route('index_stat') }}" >
+                                                        <em class="ni ni-bar-chart-alt me-1"></em>
+                                                        <span class="nk-menu-text ">
+                                                            statistique
+                                                        </span>
+                                                    </a>
+                                                </li>
+                                                @endif
+                                            </ul>
                                         </li>
                                         @endif
-                                        @if (session('user_auto')->list_user === 'oui')
-                                        <li >
-                                            <a class="nk-menu-link" href="{{ route('index_liste_resva') }}">
-                                                <em class="icon ni ni-list me-1"></em>
-                                                <span class="nk-menu-text ">
-                                                    Liste des utilisateurs
+                                        @if (session('user_auto')->new_proces === 'oui' || session('user_auto')->list_proces === 'oui')
+                                        <li class="nk-menu-item has-sub">
+                                            <a class="nk-menu-toggle btn " >
+                                                <em class="ni ni-share-alt me-2"></em>
+                                                <span class="nk-menu-text text-dark">
+                                                    Processus
                                                 </span>
                                             </a>
+                                            <ul class="nk-menu-sub">
+                                                @if (session('user_auto')->new_proces === 'oui')
+                                                <li >
+                                                    <a class="nk-menu-link" href="{{ route('index_add_processus') }}">
+                                                        <em class="icon ni ni-property-add me-1"></em>
+                                                        <span class="nk-menu-text ">
+                                                            Nouveau processus
+                                                        </span>
+                                                    </a>
+                                                </li>
+                                                @endif
+                                                @if (session('user_auto')->list_proces === 'oui')
+                                                <li >
+                                                    <a class="nk-menu-link" href="{{ route('index_listeprocessus') }}">
+                                                        <em class="ni ni-list-index me-1"></em>
+                                                        <span class="nk-menu-text ">
+                                                            Liste des processus
+                                                        </span>
+                                                    </a>
+                                                </li>
+                                                @endif
+                                            </ul>
                                         </li>
                                         @endif
-                                        @if (session('user_auto')->new_poste === 'oui')
-                                        <li >
-                                            <a data-bs-toggle="modal" data-bs-target="#modalPoste" class="nk-menu-link">
-                                                <em class="ni ni-reports-alt me-1"></em>
-                                                <span class="nk-menu-text ">
-                                                    Nouveau poste
+                                        @if (session('user_auto')->new_recla === 'oui' || session('user_auto')->list_recla === 'oui')
+                                        <li class="nk-menu-item has-sub">
+                                            <a class=" nk-menu-toggle btn " >
+                                                <em class="icon ni ni-reports me-2"></em>
+                                                <span class="nk-menu-text text-dark">
+                                                    Réclamation
                                                 </span>
                                             </a>
+                                            <ul class="nk-menu-sub">
+                                                @if (session('user_auto')->new_recla === 'oui')
+                                                <li class="nk-menu-item">
+                                                    <a class="nk-menu-link" href="{{ route('index_amelioration') }}">
+                                                        <em class="icon ni ni-view-list-sq me-1"></em>
+                                                        <span class="nk-menu-text">
+                                                            Nouvelle Réclamation
+                                                        </span>
+                                                    </a>
+                                                </li>
+                                                @endif
+                                                @if (session('user_auto')->verif_recla === 'oui')
+                                                <li class="nk-menu-item">
+                                                    <a class="nk-menu-link" href="{{ route('index_validation_recla') }}">
+                                                        <em class="ni ni-file-docs me-1"></em>
+                                                        <span class="nk-menu-text">
+                                                            Verification des Réclamations
+                                                        </span>
+                                                    </a>
+                                                </li>
+                                                @endif
+                                                @if (session('user_auto')->recla_non_a === 'oui')
+                                                <li class="nk-menu-item">
+                                                    <a class="nk-menu-link" href="{{ route('index_non_accepte') }}">
+                                                        <em class="ni ni-row-view me-1"></em>
+                                                        <span class="nk-menu-text">
+                                                            Réclamations non accéptées
+                                                        </span>
+                                                    </a>
+                                                </li>
+                                                @endif
+                                                @if (session('user_auto')->list_recla === 'oui')
+                                                <li class="nk-menu-item">
+                                                    <a class="nk-menu-link" href="{{ route('index_listereclamation') }}">
+                                                        <em class="ni ni-list-index me-1"></em>
+                                                        <span class="nk-menu-text">
+                                                            Suivis des réclamations
+                                                        </span>
+                                                    </a>
+                                                </li>
+                                                @endif
+                                            </ul>
                                         </li>
                                         @endif
-                                        @if (session('user_auto')->list_poste === 'oui')
-                                        <li >
-                                            <a href="{{ route('index_liste_poste') }}" class="nk-menu-link">
-                                                <em class="ni ni-list me-1"></em>
-                                                <span class="nk-menu-text ">
-                                                    Liste des postes
+                                        @if (session('user_auto')->list_cause === 'oui' || session('user_auto')->list_resume_recla === 'oui')
+                                        <li class="nk-menu-item has-sub">
+                                            <a class="nk-menu-toggle btn " >
+                                                <em class="ni ni-list me-2"></em>
+                                                <span class="nk-menu-text text-dark">
+                                                    Listes
                                                 </span>
                                             </a>
+                                            <ul class="nk-menu-sub">
+                                                @if (session('user_auto')->list_cause === 'oui')
+                                                <li class="nk-menu-item">
+                                                    <a class="nk-menu-link" href="{{ route('index_listecause') }}">
+                                                        <em class="ni ni-list-index me-1"></em>
+                                                        <span class="nk-menu-text">
+                                                            Causes
+                                                        </span>
+                                                    </a>
+                                                </li>
+                                                @endif
+                                                @if (session('user_auto')->list_r_r === 'oui')
+                                                <li class="nk-menu-item">
+                                                    <a class="nk-menu-link" href="{{ route('index_listerecla') }}">
+                                                        <em class="ni ni-list-index me-1"></em>
+                                                        <span class="nk-menu-text">
+                                                            Résumé des reclamtions
+                                                        </span>
+                                                    </a>
+                                                </li>
+                                                @endif
+                                            </ul>
                                         </li>
                                         @endif
-                                        @if (session('user_auto')->historiq === 'oui')
-                                        <li>
-                                            <a class="nk-menu-link" href="{{ route('index_historique') }}">
-                                                <em class="icon ni ni-property me-1"></em>
-                                                <span class="nk-menu-text " >
-                                                    historique
+                                        @if (session('user_auto')->controle_action === 'oui' || session('user_auto')->list_action === 'oui')
+                                        <li class="nk-menu-item has-sub">
+                                            <a class="nk-menu-toggle btn " >
+                                                <em class="ni ni-box-view-fill me-2"></em>
+                                                <span class="nk-menu-text text-dark">
+                                                    Actions
                                                 </span>
                                             </a>
+                                            <ul class="nk-menu-sub">
+                                                @if (session('user_auto')->controle_action === 'oui')
+                                                <li class="nk-menu-item">
+                                                    <a class="nk-menu-link" href="{{ route('index_suiviaction') }}">
+                                                        <em class="icon ni ni-view-list-sq me-1"></em>
+                                                        <span class="nk-menu-text">
+                                                            Contrôle des actions
+                                                        </span>
+                                                    </a>
+                                                </li>
+                                                @endif
+                                                @if (session('user_auto')->list_action === 'oui')
+                                                <li class="nk-menu-item">
+                                                    <a class="nk-menu-link" href="{{ route('index_listeaction') }}">
+                                                        <em class="ni ni-list-index me-1"></em>
+                                                        <span class="nk-menu-text">
+                                                            Liste des actions
+                                                        </span>
+                                                    </a>
+                                                </li>
+                                                @endif
+                                            </ul>
                                         </li>
                                         @endif
-                                        @if (session('user_auto')->stat === 'oui')
-                                        <li>
-                                            <a class="nk-menu-link" href="{{ route('index_stat') }}" >
-                                                <em class="ni ni-bar-chart-alt me-1"></em>
-                                                <span class="nk-menu-text ">
-                                                    statistique
-                                                </span>
-                                            </a>
-                                        </li>
-                                        @endif
+                                        @yield('menu')
                                     </ul>
-                                </li>
                                 @endif
-                                @if (session('user_auto')->new_proces === 'oui' || session('user_auto')->list_proces === 'oui')
-                                <li class="nk-menu-item has-sub">
-                                    <a class="nk-menu-toggle btn " >
-                                        <em class="ni ni-share-alt me-2"></em>
-                                        <span class="nk-menu-text text-dark">
-                                            Processus
-                                        </span>
-                                    </a>
-                                    <ul class="nk-menu-sub">
-                                        @if (session('user_auto')->new_proces === 'oui')
-                                        <li >
-                                            <a class="nk-menu-link" href="{{ route('index_add_processus') }}">
-                                                <em class="icon ni ni-property-add me-1"></em>
-                                                <span class="nk-menu-text ">
-                                                    Nouveau processus
-                                                </span>
-                                            </a>
-                                        </li>
-                                        @endif
-                                        @if (session('user_auto')->list_proces === 'oui')
-                                        <li >
-                                            <a class="nk-menu-link" href="{{ route('index_listeprocessus') }}">
-                                                <em class="ni ni-list-index me-1"></em>
-                                                <span class="nk-menu-text ">
-                                                    Liste des processus
-                                                </span>
-                                            </a>
-                                        </li>
-                                        @endif
-                                    </ul>
-                                </li>
-                                @endif
-                                @if (session('user_auto')->new_recla === 'oui' || session('user_auto')->list_recla === 'oui')
-                                <li class="nk-menu-item has-sub">
-                                    <a class=" nk-menu-toggle btn " >
-                                        <em class="icon ni ni-reports me-2"></em>
-                                        <span class="nk-menu-text text-dark">
-                                            Réclamation
-                                        </span>
-                                    </a>
-                                    <ul class="nk-menu-sub">
-                                        @if (session('user_auto')->new_recla === 'oui')
-                                        <li class="nk-menu-item">
-                                            <a class="nk-menu-link" href="{{ route('index_amelioration') }}">
-                                                <em class="icon ni ni-view-list-sq me-1"></em>
-                                                <span class="nk-menu-text">
-                                                    Nouvelle Réclamation
-                                                </span>
-                                            </a>
-                                        </li>
-                                        @endif
-                                        @if (session('user_auto')->verif_recla === 'oui')
-                                        <li class="nk-menu-item">
-                                            <a class="nk-menu-link" href="{{ route('index_validation_recla') }}">
-                                                <em class="ni ni-file-docs me-1"></em>
-                                                <span class="nk-menu-text">
-                                                    Verification des Réclamations
-                                                </span>
-                                            </a>
-                                        </li>
-                                        @endif
-                                        @if (session('user_auto')->recla_non_a === 'oui')
-                                        <li class="nk-menu-item">
-                                            <a class="nk-menu-link" href="{{ route('index_non_accepte') }}">
-                                                <em class="ni ni-row-view me-1"></em>
-                                                <span class="nk-menu-text">
-                                                    Réclamations non accéptées
-                                                </span>
-                                            </a>
-                                        </li>
-                                        @endif
-                                        @if (session('user_auto')->list_recla === 'oui')
-                                        <li class="nk-menu-item">
-                                            <a class="nk-menu-link" href="{{ route('index_listereclamation') }}">
-                                                <em class="ni ni-list-index me-1"></em>
-                                                <span class="nk-menu-text">
-                                                    Suivis des réclamations
-                                                </span>
-                                            </a>
-                                        </li>
-                                        @endif
-                                    </ul>
-                                </li>
-                                @endif
-                                @if (session('user_auto')->list_cause === 'oui' || session('user_auto')->list_resume_recla === 'oui')
-                                <li class="nk-menu-item has-sub">
-                                    <a class="nk-menu-toggle btn " >
-                                        <em class="ni ni-list me-2"></em>
-                                        <span class="nk-menu-text text-dark">
-                                            Listes
-                                        </span>
-                                    </a>
-                                    <ul class="nk-menu-sub">
-                                        @if (session('user_auto')->list_cause === 'oui')
-                                        <li class="nk-menu-item">
-                                            <a class="nk-menu-link" href="{{ route('index_listecause') }}">
-                                                <em class="ni ni-list-index me-1"></em>
-                                                <span class="nk-menu-text">
-                                                    Causes
-                                                </span>
-                                            </a>
-                                        </li>
-                                        @endif
-                                        @if (session('user_auto')->list_r_r === 'oui')
-                                        <li class="nk-menu-item">
-                                            <a class="nk-menu-link" href="{{ route('index_listerecla') }}">
-                                                <em class="ni ni-list-index me-1"></em>
-                                                <span class="nk-menu-text">
-                                                    Résumé des reclamtions
-                                                </span>
-                                            </a>
-                                        </li>
-                                        @endif
-                                    </ul>
-                                </li>
-                                @endif
-                                @if (session('user_auto')->controle_action === 'oui' || session('user_auto')->list_action === 'oui')
-                                <li class="nk-menu-item has-sub">
-                                    <a class="nk-menu-toggle btn " >
-                                        <em class="ni ni-box-view-fill me-2"></em>
-                                        <span class="nk-menu-text text-dark">
-                                            Actions
-                                        </span>
-                                    </a>
-                                    <ul class="nk-menu-sub">
-                                        @if (session('user_auto')->controle_action === 'oui')
-                                        <li class="nk-menu-item">
-                                            <a class="nk-menu-link" href="{{ route('index_suiviaction') }}">
-                                                <em class="icon ni ni-view-list-sq me-1"></em>
-                                                <span class="nk-menu-text">
-                                                    Contrôle des actions
-                                                </span>
-                                            </a>
-                                        </li>
-                                        @endif
-                                        @if (session('user_auto')->list_action === 'oui')
-                                        <li class="nk-menu-item">
-                                            <a class="nk-menu-link" href="{{ route('index_listeaction') }}">
-                                                <em class="ni ni-list-index me-1"></em>
-                                                <span class="nk-menu-text">
-                                                    Liste des actions
-                                                </span>
-                                            </a>
-                                        </li>
-                                        @endif
-                                    </ul>
-                                </li>
-                                @endif
-                                @yield('menu')
-                            </ul>
                             @endif
                         </div>
                         <div class="nk-header-tools">
@@ -331,14 +333,14 @@
                                                         </span>
                                                     </a>
                                                 </li>
-                                                <li>
+                                                <!--<li>
                                                     <a href="{{ route('index_historique_profil')}}">
                                                         <em class="icon ni ni-activity-alt"></em>
                                                         <span>
                                                             Activité
                                                         </span>
                                                     </a>
-                                                </li>
+                                                </li>-->
                                             </ul>
                                         </div>
                                         <div class="dropdown-inner">
@@ -377,132 +379,44 @@
         </div>
     </div>
 
-    <!--<script>
-        // Vérifier si la connexion Internet est disponible avant d'utiliser Pusher
-        function checkInternetAndPusher() {
-            const online = navigator.onLine;
-
-            if (online) {
-                // Utiliser Pusher seulement si la connexion est disponible
-                // Votre code pour utiliser Pusher ici
-                // ...
-            } else {
-                // Si la connexion est perdue, rediriger vers une page spécifique
-                window.location.href = "/Internet indisponible"; // Remplacez par votre URL de page d'erreur
-            }
-        }
-
-        // Vérifier régulièrement l'état de la connexion (toutes les 5 secondes ici)
-        setInterval(checkInternetAndPusher, 2000);
-    </script>-->
-
-        <div class="modal fade" tabindex="-1" id="modalAlert2" aria-modal="true" style="position: fixed;" role="dialog" data-bs-backdrop="static" data-bs-keyboard="false">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-body modal-body-lg text-center">
-                        <div class="nk-modal">
-                            <em class="nk-modal-icon icon icon-circle icon-circle-xxl ni ni-cross bg-danger"></em>
-                            <h4 class="nk-modal-title">Session Expiré!</h4>
-                            <div class="nk-modal-action mt-5">
-                                <a class="btn btn-lg btn-mw btn-light">
-                                    ok
-                                </a>
+    <div class="modal fade" tabindex="-1" id="modalt" aria-modal="true" style="position: fixed;" role="dialog" data-bs-backdrop="static" data-bs-keyboard="false">
+        <div class="modal-dialog modal-sm" role="document">
+            <div class="modal-content">
+                <div class="modal-body modal-body-lg text-center">
+                    <div class="nk-modal">
+                        <h5 class="nk-modal-title">Traitement en cours</h5>
+                        <div class="nk-modal-text">
+                            <div class="text-center">
+                                <div class="spinner-border text-warning" role="status"></div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
 
-        <script>
-            // Sélectionnez le bouton "ok" dans la modalité
-            const okButton = document.querySelector('#modalAlert2 .btn-light');
+    <script>
+        document.getElementById("form").addEventListener("submit", function(event) {
+            event.preventDefault(); // Empêche la soumission par défaut du formulaire
 
-            // Ajoutez un gestionnaire d'événements au clic sur le bouton "ok"
-            okButton.addEventListener('click', function() {
-                // Rechargez la page
-                location.reload();
-            });
+            $('.modal').modal('hide');
+            $(`#modalt`).modal('hide');
+            $(`#modalt`).modal('show');
 
-        </script>
+            // Si toutes les validations passent, soumettre le formulaire
+            this.submit();
+        });
+    </script>
+    <script>
+        document.getElementById("form_click").addEventListener("click", function(event) {
 
-        <!--<script>
+            $('.modal').modal('hide');
+            $(`#modalt`).modal('hide');
+            $(`#modalt`).modal('show');
 
-            let inactivityTimeout;
-
-            function resetTimer() {
-                clearTimeout(inactivityTimeout);
-
-                inactivityTimeout = setTimeout(function() {
-                    // Code à exécuter lorsque l'utilisateur est inactif
-                    $('#modalAlert2').modal('show');
-                }, 300000); // Durée d'inactivité en millisecondes (par exemple, 5 minute ici)
-            }
-
-            // Lancer le minuteur au chargement de la page
-            window.onload = resetTimer;
-
-        </script>-->
-
-        <!--<script>
-            Pusher.logToConsole = true;
-
-            var pusher = new Pusher('9f9514edd43b1637ff61', {
-              cluster: 'eu'
-            });
-
-            var channel = pusher.subscribe('my-channel-user');
-            channel.bind('my-event-user', function(data) {
-                Swal.fire({
-                            title: "Alert!",
-                            text: "Session Expiré",
-                            icon: "error",
-                            confirmButtonColor: "#00d819",
-                            confirmButtonText: "OK",
-                            allowOutsideClick: false,
-                        }).then((result) => {
-                            if (result.isConfirmed) {
-                                location.reload();
-                            }
-                        });
-            });
-        </script>-->
-
-        <!--<script>
-            // JavaScript pour écouter les événements
-            const channel = pusher.subscribe('my-channel-user');
-
-            channel.bind('my-event-user', function(data) {
-                // Code pour afficher l'alerte ou réaliser une action visuelle
-                Swal.fire({
-                    title: "Alert!",
-                    text: "Session Expirée",
-                    icon: "error",
-                    confirmButtonColor: "#00d819",
-                    confirmButtonText: "OK",
-                    allowOutsideClick: false,
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        location.reload();
-                    }
-                });
-            });
-        </script>-->
-
-        <!--<script>
-
-            let idleTimer;
-            const idleTime = 300000; //5 min
-
-            function resetIdleTimer() {
-                clearTimeout(idleTimer);
-                idleTimer = setTimeout(showLogoutModal, idleTime);
-            }
-
-            function showLogoutModal() {
-                $('#modalAlert2').modal('show');
-            }
-        </script>-->
+        });
+    </script>
 
     <script src="{{asset('assets/js/bundle0226.js')}}"></script>
     <script src="{{asset('assets/js/scripts0226.js')}}"></script>
@@ -520,7 +434,7 @@
                     <a href="#" class="close" data-bs-dismiss="modal" aria-label="Close"><em class="icon ni ni-cross"></em></a>
                 </div>
                 <div class="modal-body">
-                    <form id="form_insert" method="post" action="{{ route('index_add_poste_traitement') }}">
+                    <form id="form" method="post" action="{{ route('index_add_poste_traitement') }}">
                         @csrf
                         <div class="row g-4 mb-4" id="poste-container">
                             <div class="col-lg-12">
@@ -558,19 +472,6 @@
         </div>
     </div>
 
-        <script>
-            document.getElementById("form_insert").addEventListener("submit", function(event) {
-                event.preventDefault(); // Empêche la soumission par défaut du formulaire
-
-                $('.modal').modal('hide');
-                $(`#modalLoad`).modal('hide');
-                $(`#modalLoad`).modal('show');
-
-                // Si toutes les validations passent, soumettre le formulaire
-                this.submit();
-            });
-        </script>
-
     <script>
         document.getElementById('ajouter-poste').addEventListener('click', function(event) {
             event.preventDefault();
@@ -602,91 +503,6 @@
             });
         });
     </script>
-
-        <div class="modal fade" tabindex="-1" id="modalLoad" aria-modal="true" role="dialog">
-            <div class="modal-dialog modal-sm" role="document">
-                <div class="modal-content">
-                    <div class="modal-body modal-body-lg text-center">
-                        <div class="nk-modal">
-                            <h5 class="nk-modal-title">Vérification des données en cours</h5>
-                            <div class="nk-modal-text">
-                                <div class="text-center">
-                                    <div class="spinner-border text-warning" role="status"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="modal fade" tabindex="-1" id="modalLoadm" aria-modal="true" role="dialog">
-            <div class="modal-dialog modal-sm" role="document">
-                <div class="modal-content">
-                    <div class="modal-body modal-body-lg text-center">
-                        <div class="nk-modal">
-                            <h5 class="nk-modal-title">Mise à jour en cours</h5>
-                            <div class="nk-modal-text">
-                                <div class="text-center">
-                                    <div class="spinner-border text-warning" role="status"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="modal fade" tabindex="-1" id="modalLoadv" aria-modal="true" role="dialog">
-            <div class="modal-dialog modal-sm" role="document">
-                <div class="modal-content">
-                    <div class="modal-body modal-body-lg text-center">
-                        <div class="nk-modal">
-                            <h5 class="nk-modal-title">Validation en cours</h5>
-                            <div class="nk-modal-text">
-                                <div class="text-center">
-                                    <div class="spinner-border text-warning" role="status"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="modal fade" tabindex="-1" id="modalLoadr" aria-modal="true" role="dialog">
-            <div class="modal-dialog modal-sm" role="document">
-                <div class="modal-content">
-                    <div class="modal-body modal-body-lg text-center">
-                        <div class="nk-modal">
-                            <h5 class="nk-modal-title">Rejet en cours</h5>
-                            <div class="nk-modal-text">
-                                <div class="text-center">
-                                    <div class="spinner-border text-warning" role="status"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="modal fade" tabindex="-1" id="modalLoads" aria-modal="true" role="dialog">
-            <div class="modal-dialog modal-sm" role="document">
-                <div class="modal-content">
-                    <div class="modal-body modal-body-lg text-center">
-                        <div class="nk-modal">
-                            <h5 class="nk-modal-title">Suppression en cours</h5>
-                            <div class="nk-modal-text">
-                                <div class="text-center">
-                                    <div class="spinner-border text-warning" role="status"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
 
     @if (session('success'))
         <script>

@@ -39,7 +39,7 @@
                                     <div class="card-inner">
                                         <table class="datatable-init table">
                                             <thead>
-                                                <tr class="text-center">
+                                                <tr>
                                                     <th></th>
                                                     <th>Matricule</th>
                                                     <th>Nom et Prénoms</th>
@@ -52,7 +52,7 @@
                                             </thead>
                                             <tbody>
                                                 @foreach($users as $key => $user)
-                                                    <tr class="text-center">
+                                                    <tr>
                                                         <td>{{ $key+1 }}</td>
                                                         <td>{{ $user->matricule }}</td>
                                                         <td>{{ $user->name }}</td>

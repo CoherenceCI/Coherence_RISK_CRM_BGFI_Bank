@@ -37,7 +37,7 @@
                                     <div class="card-inner">
                                         <table class="datatable-init table">
                                             <thead>
-                                                <tr class="text-center">
+                                                <tr>
                                                     <th></th>
                                                     <th>Poste</th>
                                                     <th>Disponibilité</th>
@@ -47,7 +47,7 @@
                                             </thead>
                                             <tbody>
                                                 @foreach ($postes as $key => $poste)
-                                                    <tr class="text-center">
+                                                    <tr>
                                                         <td>{{ $key+1}}</td>
                                                         <td>{{ $poste->nom}}</td>
                                                         <td class=" @php  if($poste->occupe === 'oui'){ echo 'text-danger'; } else{ echo 'text-success'; } @endphp " > 
@@ -88,9 +88,9 @@
                         <a href="#" class="close" data-bs-dismiss="modal" aria-label="Close"><em class="icon ni ni-cross"></em></a>
                     </div>
                     <div class="modal-body">
-                        <form id="form_update" method="post" action="{{ route('index_modif_poste_traitement') }}">
+                        <form id="form" method="post" action="{{ route('index_modif_poste_traitement') }}">
                             @csrf
-                            <div class="row g-4 mb-4" id="poste-container">
+                            <div class="row g-4 mb-4">
                                 <div class="col-lg-12">
                                     <div class="form-group text-center">
                                         <label class="form-label" for="poste">
@@ -119,19 +119,5 @@
             </div>
         </div>
     @endforeach
-
-        <script>
-            document.getElementById("form_update").addEventListener("submit", function(event) {
-                event.preventDefault(); // Empêche la soumission par défaut du formulaire
-
-                $('.modal').modal('hide');
-                $(`#modalLoadm`).modal('hide');
-                $(`#modalLoadm`).modal('show');
-
-                // Si toutes les validations passent, soumettre le formulaire
-                this.submit();
-            });
-        </script>
-
 
 @endsection

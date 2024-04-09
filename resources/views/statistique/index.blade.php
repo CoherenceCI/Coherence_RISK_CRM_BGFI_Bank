@@ -113,6 +113,7 @@
                                     </div>
                                 </div>
                             </div>
+
                             <div class="col-lg-4 col-xxl-4">
                                 <div class="card card-bordered card-full">
                                     <div class="card-inner border-bottom">
@@ -138,6 +139,7 @@
                                     </ul>
                                 </div>
                             </div>
+                            
                             <div class="col-lg-4 col-xxl-4">
                                 <div class="card card-bordered card-full">
                                     <div class="card-inner border-bottom">
@@ -155,7 +157,7 @@
                                             </div>
                                             <div class="nk-activity-data">
                                                 <div class="label">
-                                                    {{ $causes_tr->nom }} -> {{ $causes_tr->nbre_suivi }}
+                                                    {{ $causes_tr->nom }}
                                                 </div>
                                             </div>
                                         </li>
@@ -163,67 +165,142 @@
                                     </ul>
                                 </div>
                             </div>
-                            <div class="col-lg-6">
+
+                            <div class="col-md-3">
                                 <div class="card card-bordered card-full">
                                     <div class="card-inner" >
+                                        <div class="form-group text-center">
+                                            <label class="form-label" for="cf-full-name">
+                                                Suivis des réclamations
+                                            </label>
+                                        </div>
+
                                         <div>
-                                            <canvas id="myChart"></canvas>
+                                            <div>
+                                                <canvas id="myCharts"></canvas>
+                                            </div>
                                         </div>
 
                                         <script>
-                                            var ctx = document.getElementById('myChart').getContext('2d');
-                                            var myChart = new Chart(ctx, {
-                                                type: 'bar',
-                                                data: {
-                                                    labels: <?php echo json_encode($dataLabels); ?>,
-                                                    datasets: [{
-                                                        label: 'Nombre de Suivis par Cause',
-                                                        data: <?php echo json_encode($dataCounts); ?>,
-                                                        backgroundColor: 'blue',
-                                                        borderColor: 'white',
-                                                        borderWidth: 1
-                                                    }]
-                                                },
-                                                options: {
-                                                    scales: {
-                                                        y: {
-                                                            beginAtZero: true,
-                                                            ticks: {
-                                                                stepSize: 1
-                                                            }
-                                                        }
-                                                    }
+                                            var ctx = document.getElementById('myCharts').getContext('2d');
+                                            var myCharts = new Chart(ctx, {
+                                            type: 'doughnut',
+                                            data: {
+                                                labels: ['Non traité ({{ $rech_nt }})', 'En cours ({{ $rech_en }})', 'Terminé ({{ $rech_t }})'],
+                                                datasets: [{
+                                                    data: [{{ $rech_nt }},{{ $rech_en }},{{ $rech_t }}],
+                                                    backgroundColor: ['red', 'orange', 'green'],
+                                                    borderColor: 'white',
+                                                    borderWidth: 1
+                                                }],
+                                                hoverOffset: 4
+                                            },
+                                            options: {
+                                                responsive: true,
+                                                maintainAspectRatio: false,
+                                                plugins: {
+                                                    legend: {
+                                                        position: 'right',
+                                                    },
                                                 }
-                                            });
+                                            }
+                                        });
                                         </script>
 
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-6">
+
+                            <div class="col-md-3">
                                 <div class="card card-bordered card-full">
-                                    <div class="card-inner">
+                                    <div class="card-inner" >
                                         <div class="form-group text-center">
-                                            <label class="form-label">Choisir un interval de date</label>
-                                            <div class="form-control-wrap">
-                                                <div class="input-daterange date-picker-range input-group">
-                                                    <input data-date-format="yyyy-mm-dd" name="date1" id="date1" type="text" class="form-control" />
-                                                    <div class="input-group-addon">TO</div>
-                                                    <input data-date-format="yyyy-mm-dd" name="date2" id="date2" type="text" class="form-control me-2" />
-                                                    <button id="btn_rech" class="btn btn-outline-success" >
-                                                        <em class="ni ni-search" ></em>
-                                                    </button>
-                                                </div>
+                                            <label class="form-label" for="cf-full-name">
+                                                Résultat des recherches
+                                            </label>
+                                        </div>
+
+                                        <div>
+                                            <div>
+                                                <canvas id="myChartss"></canvas>
                                             </div>
                                         </div>
 
-                                        <div id="camenber2">
-
-                                        </div>
+                                        <script>
+                                            var ctx = document.getElementById('myChartss').getContext('2d');
+                                            var myChartss = new Chart(ctx, {
+                                            type: 'doughnut',
+                                            data: {
+                                                labels: ['Réclamations ({{ $rech_tr_recla }})', 'Causes ({{ $rech_tr_cause }})', 'Néant ({{ $rech_tr_n }})'],
+                                                datasets: [{
+                                                    data: [{{ $rech_tr_recla }},{{ $rech_tr_cause }},{{ $rech_tr_n }}],
+                                                    backgroundColor: ['blue', 'yellow', 'gray'],
+                                                    borderColor: 'white',
+                                                    borderWidth: 1
+                                                }],
+                                                hoverOffset: 4
+                                            },
+                                            options: {
+                                                responsive: true,
+                                                maintainAspectRatio: false,
+                                                plugins: {
+                                                    legend: {
+                                                        position: 'right',
+                                                    },
+                                                }
+                                            }
+                                        });
+                                        </script>
 
                                     </div>
                                 </div>
                             </div>
+
+                            <div class="col-md-3">
+                                <div class="card card-bordered card-full">
+                                    <div class="card-inner" >
+                                        <div class="form-group text-center">
+                                            <label class="form-label" for="cf-full-name">
+                                                Escaladeur
+                                            </label>
+                                        </div>
+
+                                        <div>
+                                            <div>
+                                                <canvas id="myChartsss"></canvas>
+                                            </div>
+                                        </div>
+
+                                        <script>
+                                            var ctx = document.getElementById('myChartsss').getContext('2d');
+                                            var myChartsss = new Chart(ctx, {
+                                            type: 'doughnut',
+                                            data: {
+                                                labels: ['Oui ({{ $esc_oui }})', 'Non ({{ $esc_non }})'],
+                                                datasets: [{
+                                                    data: [{{ $esc_oui }},{{ $esc_non }}],
+                                                    backgroundColor: ['Red', 'green'],
+                                                    borderColor: 'white',
+                                                    borderWidth: 1
+                                                }],
+                                                hoverOffset: 4
+                                            },
+                                            options: {
+                                                responsive: true,
+                                                maintainAspectRatio: false,
+                                                plugins: {
+                                                    legend: {
+                                                        position: 'right',
+                                                    },
+                                                }
+                                            }
+                                        });
+                                        </script>
+
+                                    </div>
+                                </div>
+                            </div>
+
                         </div>
                     </div>
                 </div>
@@ -231,70 +308,6 @@
         </div>
     </div>
 </div>
-
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        // Écouteur pour le changement de sélection
-        document.getElementById('btn_rech').addEventListener('click', function() {
-            var date1 = document.getElementById('date1').value;
-            var date2 = document.getElementById('date2').value;
-
-            $.ajax({
-                url: '/get_date',
-                method: 'GET',
-                data: { date1: date1, date2: date2 }, // Pass date1 and date2 to the server
-                success: function (data) {
-                    addGroups(data);
-                },
-                error: function () {
-                    toastr.error("Une erreur s'est produite lors de la récupération des informations.");
-                }
-            });
-        });
-
-        function addGroups(data) {
-            var dynamicFields = document.getElementById("camenber2");
-
-            // Supprimer le contenu existant
-            while (dynamicFields.firstChild) {
-                dynamicFields.removeChild(dynamicFields.firstChild);
-            }
-
-            var groupe = document.createElement("div");
-            groupe.className = "";
-            groupe.innerHTML = `
-                <canvas id="myChart2"></canvas>
-            `;
-
-            document.getElementById("camenber2").appendChild(groupe);
-
-            var ctx = document.getElementById('camenber2').getContext('2d');
-            var camenber2 = new camenber2(ctx, {
-                type: 'bar',
-                data: {
-                    labels: data.dataLs,
-                    datasets: [{
-                        label: 'Nombre de Suivis par Cause',
-                        data: data.dataCs,
-                        backgroundColor: 'blue',
-                        borderColor: 'white',
-                        borderWidth: 1
-                    }]
-                },
-                options: {
-                    scales: {
-                        y: {
-                            beginAtZero: true,
-                            ticks: {
-                                stepSize: 1
-                            }
-                        }
-                    }
-                }
-            });
-        }
-    });
-</script>
 
 @endsection
 
